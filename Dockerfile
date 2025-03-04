@@ -12,7 +12,7 @@ COPY src src
 RUN chmod +x ./mvnw
 
 # Build the application without running tests
-RUN ./mvnw clean package -DskipTests
+RUN apt-get update && apt-get install -y maven && mvn clean package -DskipTests
 
 # Stage 2: Create the final runtime image
 FROM openjdk:17-jdk-slim
