@@ -1,0 +1,46 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+
+# OS-specifikke filer (valgfrit, men godt at have)
+.DS_Store
+Thumbs.db
+
+# Maven output-mapper (hvis ikke de allerede er dækket)
+target/
+build/
+
+# Miljøfiler (meget vigtigt, hvis du senere tilføjer credentials!)
+application.properties
+.env
