@@ -44,3 +44,7 @@ build/
 # Miljøfiler (meget vigtigt, hvis du senere tilføjer credentials!)
 application.properties
 .env
+
+
+# Google credentials
+google-credentials.json
