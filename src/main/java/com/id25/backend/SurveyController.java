@@ -2,19 +2,24 @@ package com.id25.backend;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.id25.backend.SurveyLoader.*;
 
 @RestController
 @RequestMapping("/api/survey")
 @CrossOrigin(origins = {"http://localhost:3000", "https://id25-react.onrender.com/"}) // Tillad adgang fra frontend
 public class SurveyController {
 
-    private final List<Survey> surveyData = List.of(
-            new Survey("A", "Mette", "Nordjylland", "mette@a.dk", "ja", "nej", "ja", "nej", "Ingen kommentar"),
-            new Survey("B", "Lars", "Midtjylland", "lars@b.dk", "nej", "ja", "nej", "ja", "Spændende"),
-            new Survey("Ø", "Pelle", "Storkøbenhavn", "pelle@ø.dk", "ja", "nej", "ja", "nej", "kommentar")
-    );
+
+    private final List<Survey> surveyData;
+
+    public SurveyController() {
+            surveyData = SurveyLoader.loadSurveyData("dummyData.txt");
+    }
+
 
     @GetMapping("/results")
     public List<Survey> getSurveyResults(
