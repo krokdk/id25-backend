@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/survey")
-@CrossOrigin(origins = "http://localhost:3000") // Tillad adgang fra frontend
+@CrossOrigin(origins = {"http://localhost:3000", "https://id25-react.onrender.com/"}) // Tillad adgang fra frontend
 public class SurveyController {
 
     private final List<Survey> surveyData = List.of(
