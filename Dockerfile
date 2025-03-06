@@ -3,10 +3,10 @@ FROM openjdk:17-jdk-slim AS build
 WORKDIR /app
 
 # Copy necessary files for building
-COPY pom.xml .  
-COPY mvnw .  
-COPY .mvn .mvn  
-COPY src src  
+COPY pom.xml .
+COPY mvnw .
+COPY .mvn .mvn
+COPY src src
 
 # Set execution permission for the Maven wrapper
 RUN chmod +x ./mvnw
@@ -20,6 +20,9 @@ VOLUME /tmp
 
 # Copy the built JAR from the previous stage
 COPY --from=build /app/target/*.jar app.jar
+
+# Copy the dummy data file into the container (adjust path if necessary)
+COPY ./dummyData.txt /app/dummyData.txt
 
 # Expose port 8080
 EXPOSE 8080
