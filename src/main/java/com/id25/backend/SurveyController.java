@@ -17,7 +17,7 @@ public class SurveyController {
     private final List<Survey> surveyData;
 
     public SurveyController() {
-            surveyData = SurveyLoader.loadSurveyData("dummyData.txt");
+            surveyData = SurveyLoader.loadSurveyData("/app/dummyData.txt");
     }
 
 
