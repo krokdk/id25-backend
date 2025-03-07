@@ -7,11 +7,13 @@ import com.google.api.client.json.*;
 import com.google.api.client.json.gson.*;
 import com.google.api.services.sheets.v4.*;
 import com.google.api.services.sheets.v4.model.*;
+import org.springframework.stereotype.*;
 
 import java.io.*;
 import java.security.*;
 import java.util.*;
 
+@Service
 public class GoogleSheetImporter {
 
     public GoogleSheetImporter(){
@@ -20,14 +22,14 @@ public class GoogleSheetImporter {
 
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    private static final String SPREADSHEET_ID = "your-google-sheet-id"; // Replace with your Google Sheet ID
-    private static final String RANGE = "Sheet1!A1:B"; // Define the range of cells to fetch
+    private static final String SPREADSHEET_ID = "1B0V2vMr8baXp6PftSYF7FBAFUJGORFB1eZaMBJvviBY";
+    private static final String RANGE = "valg2024!A:I"; // Define the range of cells to fetch
 
     // Replace with your path to the credentials file
     private static final String CREDENTIALS_FILE_PATH = "google-credentials.json";
 
     // Public method to fetch and return Google Sheets data as list of Survey objects
-    public List<Survey> importGoogleSheetData() throws IOException, GeneralSecurityException {
+    public List<Survey> importGoogleSheetData() throws GeneralSecurityException, IOException {
         // Initialize Sheets API service
         Sheets sheetsService = getSheetsService();
 
@@ -41,19 +43,19 @@ public class GoogleSheetImporter {
 
         if (values != null && !values.isEmpty()) {
             for (List<Object> row : values) {
-                if (row.size() >= 7) {
+                if (row.size() >= 4) {
                     String parti = row.get(0).toString();  // Assuming column 1 is parti
                     String fornavn = row.get(1).toString();  // Assuming column 2 is fornavn
-                    String storkreds = row.get(2).toString();  // Assuming column 3 is storkreds
-                    String email = row.get(3).toString();  // Assuming column 4 is email
-                    String svar1 = row.get(4).toString();  // Assuming column 5 is svar1
-                    String svar2 = row.get(5).toString();  // Assuming column 6 is svar2
-                    String svar3 = row.get(6).toString();  // Assuming column 7 is svar3
-                    String svar4 = row.get(7).toString();  // Assuming column 8 is svar4
-                    String svar5 = row.get(8).toString();  // Assuming column 9 is svar5
-// Create Survey object with all fields
-                    surveys.add(new Survey(parti, fornavn, storkreds, email, svar1, svar2, svar3, svar4, svar5));
+                    String email = row.get(2).toString();  // Assuming column 4 is email
+                    String storkreds = row.get(3).toString();  // Assuming column 3 is storkreds
+                    String svar1 = row.size() > 4 ? row.get(4).toString() : "";  // Hvis tom, sæt til ""
+                    String svar2 = row.size() > 5 ? row.get(5).toString() : "";
+                    String svar3 = row.size() > 6 ? row.get(6).toString() : "";
+                    String svar4 = row.size() > 7 ? row.get(7).toString() : "";
+                    String svar5 = row.size() > 8 ? row.get(8).toString() : "";
 
+                    // Create Survey object with all fields
+                    surveys.add(new Survey(parti, fornavn, storkreds, email, svar1, svar2, svar3, svar4, svar5));
                 }
             }
         }
