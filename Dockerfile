@@ -24,6 +24,9 @@ COPY --from=build /app/target/*.jar app.jar
 # Copy the dummy data file into the container (adjust path if necessary)
 COPY ./dummyData.txt /app/dummyData.txt
 
+# Kopier credentials-filen til containeren
+COPY google-credentials.json /app/google-credentials.json
+
 # Expose port 8080
 EXPOSE 8080
 
