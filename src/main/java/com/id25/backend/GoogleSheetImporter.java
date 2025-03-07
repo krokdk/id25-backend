@@ -9,8 +9,7 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,11 +20,14 @@ public class GoogleSheetImporter {
 
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    private static final String SPREADSHEET_ID = "1B0V2vMr8baXp6PftSYF7FBAFUJGORFB1eZaMBJvviBY";
-    private static final String RANGE = "valg2024!A:I"; // Fetch columns A to I
+    private static final String SPREADSHEET_ID = "1N6z_A3eAImleBXdzky1cbLADQtUOg2fFNlR9pOiTGDs";
+    private static final String RANGE = "tablepressview2!A:H"; // Fetch columns A to H
 
     // ✅ Read credentials from Render environment variable
     private static final String CREDENTIALS_ENV_VAR = "GOOGLE_CREDENTIALS";
+
+    // 🔹 Filsti til credentials i lokal udvikling
+    private static final String CREDENTIALS_FILE_PATH = "google-credentials.json";
 
     public GoogleSheetImporter() {
         // Default Constructor (Dependency Injection)
@@ -42,19 +44,18 @@ public class GoogleSheetImporter {
 
         if (values != null && !values.isEmpty()) {
             for (List<Object> row : values) {
-                if (row.size() >= 4) {
-                    String parti = row.get(0).toString();  // Assuming column 1 is parti
-                    String fornavn = row.get(1).toString();  // Assuming column 2 is fornavn
-                    String email = row.get(2).toString();  // Assuming column 4 is email
-                    String storkreds = row.get(3).toString();  // Assuming column 3 is storkreds
-                    String svar1 = row.size() > 4 ? row.get(4).toString() : "";  // Hvis tom, sæt til ""
-                    String svar2 = row.size() > 5 ? row.get(5).toString() : "";
-                    String svar3 = row.size() > 6 ? row.get(6).toString() : "";
-                    String svar4 = row.size() > 7 ? row.get(7).toString() : "";
-                    String svar5 = row.size() > 8 ? row.get(8).toString() : "";
+                if (row.size() >= 3) {
+                    String parti = row.get(1).toString();  // Assuming column 1 is parti
+                    String fornavn = row.get(0).toString();  // Assuming column 2 is fornavn
+                    String storkreds = row.get(2).toString();  // Assuming column 3 is storkreds
+                    String svar1 = row.size() > 3 ? row.get(3).toString() : "";  // Hvis tom, sæt til ""
+                    String svar2 = row.size() > 4 ? row.get(4).toString() : "";
+                    String svar3 = row.size() > 5 ? row.get(5).toString() : "";
+                    String svar4 = row.size() > 6 ? row.get(6).toString() : "";
+                    String svar5 = row.size() > 7 ? row.get(7).toString() : "";
 
                     // Create Survey object with all fields
-                    surveys.add(new Survey(parti, fornavn, storkreds, email, svar1, svar2, svar3, svar4, svar5));
+                    surveys.add(new Survey(parti, fornavn, storkreds, svar1, svar2, svar3, svar4, svar5));
                 }
             }
         }
@@ -63,15 +64,25 @@ public class GoogleSheetImporter {
 
     private Sheets getSheetsService() throws IOException, GeneralSecurityException {
         HttpTransport transport = GoogleNetHttpTransport.newTrustedTransport();
+        GoogleCredential credential;
 
-        // ✅ Get credentials from environment variable
+        // 🔹 Tjek om miljøvariablen findes (Render)
         String credentialsJson = System.getenv(CREDENTIALS_ENV_VAR);
-        if (credentialsJson == null || credentialsJson.isEmpty()) {
-            throw new IOException("Error: GOOGLE_CREDENTIALS environment variable is missing.");
-        }
+        if (credentialsJson != null && !credentialsJson.isEmpty()) {
+            System.out.println("🔹 Bruger miljøvariabel til autentificering (Render)");
+            credential = GoogleCredential.fromStream(new ByteArrayInputStream(credentialsJson.getBytes()))
+                    .createScoped(Collections.singleton("https://www.googleapis.com/auth/spreadsheets.readonly"));
+        } else {
+            // 🔹 Brug lokal credentials-fil
+            System.out.println("🔹 Miljøvariabel ikke fundet. Bruger lokal fil: " + CREDENTIALS_FILE_PATH);
+            File credentialsFile = new File(CREDENTIALS_FILE_PATH);
+            if (!credentialsFile.exists()) {
+                throw new FileNotFoundException("Fejl: google-credentials.json findes ikke! Placer filen i projektets rod.");
+            }
 
-        GoogleCredential credential = GoogleCredential.fromStream(new ByteArrayInputStream(credentialsJson.getBytes()))
-                .createScoped(Collections.singleton("https://www.googleapis.com/auth/spreadsheets.readonly"));
+            credential = GoogleCredential.fromStream(new FileInputStream(credentialsFile))
+                    .createScoped(Collections.singleton("https://www.googleapis.com/auth/spreadsheets.readonly"));
+        }
 
         return new Sheets.Builder(transport, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)

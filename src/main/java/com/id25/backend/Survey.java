@@ -12,12 +12,10 @@ public class Survey {
     private String svar5;
 
     // Constructor with all fields
-    public Survey(String parti, String fornavn, String storkreds, String email,
-                  String svar1, String svar2, String svar3, String svar4, String svar5) {
+    public Survey(String parti, String fornavn, String storkreds, String svar1, String svar2, String svar3, String svar4, String svar5) {
         this.parti = parti;
         this.fornavn = fornavn;
         this.storkreds = storkreds;
-        this.email = email;
         this.svar1 = svar1;
         this.svar2 = svar2;
         this.svar3 = svar3;

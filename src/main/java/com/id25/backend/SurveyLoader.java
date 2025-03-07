@@ -24,14 +24,13 @@ public class SurveyLoader {
                         String firstEntry = parts[0];
                         String firstName = parts[1];
                         String region = parts[2];
-                        String email = parts[3];
                         String answer1 = parts[4];
                         String answer2 = parts[5];
                         String answer3 = parts[6];
                         String answer4 = parts[7];
                         String sentence = parts[8];
 
-                        Survey survey = new Survey(firstEntry, firstName, region, email, answer1, answer2, answer3, answer4, sentence);
+                        Survey survey = new Survey(firstEntry, firstName, region, answer1, answer2, answer3, answer4, sentence);
                         surveyList.add(survey);
                     }
                 }
