@@ -1,39 +1,38 @@
 package com.id25.backend;
 
-import com.google.api.client.googleapis.auth.oauth2.*;
-import com.google.api.client.googleapis.javanet.*;
-import com.google.api.client.http.*;
-import com.google.api.client.json.*;
-import com.google.api.client.json.gson.*;
-import com.google.api.services.sheets.v4.*;
-import com.google.api.services.sheets.v4.model.*;
-import org.springframework.stereotype.*;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.sheets.v4.Sheets;
+import com.google.api.services.sheets.v4.model.ValueRange;
+import org.springframework.stereotype.Service;
 
-import java.io.*;
-import java.security.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class GoogleSheetImporter {
 
-    public GoogleSheetImporter(){
-        // DI
-    }
-
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final String SPREADSHEET_ID = "1B0V2vMr8baXp6PftSYF7FBAFUJGORFB1eZaMBJvviBY";
-    private static final String RANGE = "valg2024!A:I"; // Define the range of cells to fetch
+    private static final String RANGE = "valg2024!A:I"; // Fetch columns A to I
 
-    // Replace with your path to the credentials file
-    private static final String CREDENTIALS_FILE_PATH = "google-credentials.json";
+    // ✅ Read credentials from Render environment variable
+    private static final String CREDENTIALS_ENV_VAR = "GOOGLE_CREDENTIALS";
 
-    // Public method to fetch and return Google Sheets data as list of Survey objects
+    public GoogleSheetImporter() {
+        // Default Constructor (Dependency Injection)
+    }
+
     public List<Survey> importGoogleSheetData() throws GeneralSecurityException, IOException {
-        // Initialize Sheets API service
         Sheets sheetsService = getSheetsService();
-
-        // Fetch data from the sheet
         ValueRange response = sheetsService.spreadsheets().values()
                 .get(SPREADSHEET_ID, RANGE)
                 .execute();
@@ -59,15 +58,20 @@ public class GoogleSheetImporter {
                 }
             }
         }
-
         return surveys;
     }
 
-    // Helper method to set up the Sheets API service
     private Sheets getSheetsService() throws IOException, GeneralSecurityException {
         HttpTransport transport = GoogleNetHttpTransport.newTrustedTransport();
-        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream(CREDENTIALS_FILE_PATH))
-                .createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS_READONLY));
+
+        // ✅ Get credentials from environment variable
+        String credentialsJson = System.getenv(CREDENTIALS_ENV_VAR);
+        if (credentialsJson == null || credentialsJson.isEmpty()) {
+            throw new IOException("Error: GOOGLE_CREDENTIALS environment variable is missing.");
+        }
+
+        GoogleCredential credential = GoogleCredential.fromStream(new ByteArrayInputStream(credentialsJson.getBytes()))
+                .createScoped(Collections.singleton("https://www.googleapis.com/auth/spreadsheets.readonly"));
 
         return new Sheets.Builder(transport, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
