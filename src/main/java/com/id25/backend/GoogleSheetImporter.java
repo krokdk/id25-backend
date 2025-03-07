@@ -26,7 +26,7 @@ public class GoogleSheetImporter {
     private static final String RANGE = "valg2024!A:I"; // Define the range of cells to fetch
 
     // Replace with your path to the credentials file
-    private static final String CREDENTIALS_FILE_PATH = "/app/google-credentials.json";
+    private static final String CREDENTIALS_FILE_PATH = "google-credentials.json";
 
     // Public method to fetch and return Google Sheets data as list of Survey objects
     public List<Survey> importGoogleSheetData() throws GeneralSecurityException, IOException {
