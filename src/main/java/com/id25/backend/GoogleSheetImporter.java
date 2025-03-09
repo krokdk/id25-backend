@@ -18,6 +18,8 @@ import java.util.List;
 @Service
 public class GoogleSheetImporter {
 
+    // lad årstal være en paramter i webservicen og brug denne til at finde det relevante data sæt!
+
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final String SPREADSHEET_ID = "17Ys5TtNURFctkaLXRkPeJOpwjqh4WjwqgEbseDy9ps0";//2024 "1N6z_A3eAImleBXdzky1cbLADQtUOg2fFNlR9pOiTGDs";
