@@ -45,7 +45,7 @@ public class GoogleSheetImporter {
         if (values != null && !values.isEmpty()) {
             for (List<Object> row : values) {
                 if (row.size() >= 3) {
-                    String parti = row.get(1).toString();  // Assuming column 1 is parti
+                    String parti = PartiMapper.getPartiBogstav(row.get(1).toString());  // Assuming column 1 is parti
                     String fornavn = row.get(0).toString();  // Assuming column 2 is fornavn
                     String storkreds = row.get(2).toString();  // Assuming column 3 is storkreds
                     String svar1 = row.size() > 3 ? row.get(3).toString() : "";  // Hvis tom, sæt til ""
