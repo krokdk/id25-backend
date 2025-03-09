@@ -20,8 +20,8 @@ public class GoogleSheetImporter {
 
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    private static final String SPREADSHEET_ID = "1N6z_A3eAImleBXdzky1cbLADQtUOg2fFNlR9pOiTGDs";
-    private static final String RANGE = "tablepressview2!A:H"; // Fetch columns A to H
+    private static final String SPREADSHEET_ID = "17Ys5TtNURFctkaLXRkPeJOpwjqh4WjwqgEbseDy9ps0";//2024 "1N6z_A3eAImleBXdzky1cbLADQtUOg2fFNlR9pOiTGDs";
+    private static final String RANGE = "tablepress2!A:H";// 2024 "tablepressview2!A:H"; // Fetch columns A to H
 
     // ✅ Read credentials from Render environment variable
     private static final String CREDENTIALS_ENV_VAR = "GOOGLE_CREDENTIALS";
