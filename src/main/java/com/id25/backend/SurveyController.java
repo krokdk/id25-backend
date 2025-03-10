@@ -1,14 +1,12 @@
 package com.id25.backend;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.security.*;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.*;
+import java.util.*;
 import java.util.stream.*;
 
 @RestController
@@ -16,15 +14,16 @@ import java.util.stream.*;
 @RequestMapping("/api/survey")
 public class SurveyController {
 
-    private final GoogleSheetImporter googleSheetImporter;
-    private List<Survey> cachedData; // Lokalt cachet data
+    private final GoogleSheetImporterFactory googleSheetImporterFactory;
+    private GoogleSheetImporter googleSheetImporter;
+        private Map<Long, List<Survey>> cachedData; // Lokalt cachet data
     private Instant lastUpdated;
     private static final Duration CACHE_DURATION = Duration.ofHours(1); // Cache i 10 minutter
 
     @Autowired
-    public SurveyController(GoogleSheetImporter googleSheetImporter) {
-        this.googleSheetImporter = googleSheetImporter;
-        this.cachedData = new ArrayList<Survey>();
+    public SurveyController(GoogleSheetImporterFactory googleSheetImporterFactory) {
+        this.googleSheetImporterFactory = googleSheetImporterFactory;
+        this.cachedData = new HashMap<>();
         this.lastUpdated = Instant.MIN;
     }
 
@@ -37,14 +36,15 @@ public class SurveyController {
             @RequestParam(required = false) String svar2,
             @RequestParam(required = false) String svar3,
             @RequestParam(required = false) String svar4,
-            @RequestParam(required = false) String svar5
+            @RequestParam(required = false) String svar5,
+            @RequestParam(required = false) Long year
     ) throws GeneralSecurityException, IOException {
-        // Tjekker om cachen er forældet
-        if (cachedData.isEmpty() || Duration.between(lastUpdated, Instant.now()).compareTo(CACHE_DURATION) > 0) {
-            cachedData = googleSheetImporter.importGoogleSheetData(); // Henter friske data
+        if (cachedData.isEmpty() || !cachedData.containsKey(year) || Duration.between(lastUpdated, Instant.now()).compareTo(CACHE_DURATION) > 0) {
+            googleSheetImporter = googleSheetImporterFactory.getImporter(year);
+            cachedData.put(year, googleSheetImporter.importGoogleSheetData()); // Henter friske data
             lastUpdated = Instant.now();
         }
-        return cachedData.stream()
+        return cachedData.get(year).stream()
                 .filter(s -> parti == null || s.getParti().equalsIgnoreCase(parti))
                 .filter(s -> fornavn == null || s.getFornavn().equalsIgnoreCase(fornavn))
                 .filter(s -> storkreds == null || s.getStorkreds().equalsIgnoreCase(fornavn))
@@ -58,7 +58,9 @@ public class SurveyController {
 
     @GetMapping("/refresh")
     public String refreshCache() throws GeneralSecurityException, IOException {
-        cachedData = googleSheetImporter.importGoogleSheetData(); // Henter friske data manuelt
+
+        for (var cachedSheetData : cachedData.values()) cachedSheetData = googleSheetImporter.importGoogleSheetData();
+
         lastUpdated = Instant.now();
         return "Cache opdateret!";
     }

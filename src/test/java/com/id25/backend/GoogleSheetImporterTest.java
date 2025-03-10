@@ -10,7 +10,7 @@ class GoogleSheetImporterTest {
 
     @Test
     void testImportGoogleSheetData() {
-        GoogleSheetImporter importer = new GoogleSheetImporter();
+        GoogleSheetImporter importer = new GoogleSheetImporter(2024L);
 
         try {
             List<Survey> surveys = importer.importGoogleSheetData();

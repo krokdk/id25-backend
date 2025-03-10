@@ -1,24 +1,19 @@
 package com.id25.backend;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.services.sheets.v4.Sheets;
-import com.google.api.services.sheets.v4.model.ValueRange;
-import org.springframework.stereotype.Service;
+import com.google.api.client.googleapis.auth.oauth2.*;
+import com.google.api.client.googleapis.javanet.*;
+import com.google.api.client.http.*;
+import com.google.api.client.json.*;
+import com.google.api.client.json.gson.*;
+import com.google.api.services.sheets.v4.*;
+import com.google.api.services.sheets.v4.model.*;
 
 import java.io.*;
-import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.security.*;
+import java.util.*;
 
-@Service
+
 public class GoogleSheetImporter {
-
-    // lad årstal være en paramter i webservicen og brug denne til at finde det relevante data sæt!
 
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
@@ -30,15 +25,19 @@ public class GoogleSheetImporter {
 
     // 🔹 Filsti til credentials i lokal udvikling
     private static final String CREDENTIALS_FILE_PATH = "google-credentials.json";
+    private final Long year;
 
-    public GoogleSheetImporter() {
-        // Default Constructor (Dependency Injection)
+    public GoogleSheetImporter(Long year) {
+
+        this.year = year;
     }
 
     public List<Survey> importGoogleSheetData() throws GeneralSecurityException, IOException {
+        SheetInfo sheetInfo =GoogleSheetMapper.getSheetInfo(year);
+
         Sheets sheetsService = getSheetsService();
         ValueRange response = sheetsService.spreadsheets().values()
-                .get(SPREADSHEET_ID, RANGE)
+                .get(sheetInfo.getSheetId(), sheetInfo.getRange())
                 .execute();
 
         List<List<Object>> values = response.getValues();
