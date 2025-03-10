@@ -29,7 +29,7 @@ public class PartiMapper {
         }
     }
 
-    static String getPartiBogstav(String partiNavn) {
+    public static String getPartiBogstav(String partiNavn) {
         return navnTilBogstav.getOrDefault(partiNavn, "UKENDT");
     }
 }

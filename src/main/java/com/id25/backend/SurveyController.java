@@ -1,5 +1,6 @@
 package com.id25.backend;
 
+import com.id25.backend.googlesheets.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,7 +60,13 @@ public class SurveyController {
     @GetMapping("/refresh")
     public String refreshCache() throws GeneralSecurityException, IOException {
 
-        for (var cachedSheetData : cachedData.values()) cachedSheetData = googleSheetImporter.importGoogleSheetData();
+        cachedData.replaceAll((key, value) -> {
+            try {
+                return googleSheetImporterFactory.getImporter(key).importGoogleSheetData();
+            } catch (GeneralSecurityException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         lastUpdated = Instant.now();
         return "Cache opdateret!";

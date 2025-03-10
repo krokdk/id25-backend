@@ -1,4 +1,4 @@
-package com.id25.backend;
+package com.id25.backend.googlesheets;
 
 import com.google.api.client.googleapis.auth.oauth2.*;
 import com.google.api.client.googleapis.javanet.*;
@@ -7,6 +7,7 @@ import com.google.api.client.json.*;
 import com.google.api.client.json.gson.*;
 import com.google.api.services.sheets.v4.*;
 import com.google.api.services.sheets.v4.model.*;
+import com.id25.backend.*;
 
 import java.io.*;
 import java.security.*;
