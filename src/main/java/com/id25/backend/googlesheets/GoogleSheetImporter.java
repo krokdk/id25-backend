@@ -8,18 +8,16 @@ import com.google.api.client.json.gson.*;
 import com.google.api.services.sheets.v4.*;
 import com.google.api.services.sheets.v4.model.*;
 import com.id25.backend.*;
+import com.id25.backend.formatting.*;
 
 import java.io.*;
 import java.security.*;
 import java.util.*;
 
-
 public class GoogleSheetImporter {
 
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    private static final String SPREADSHEET_ID = "17Ys5TtNURFctkaLXRkPeJOpwjqh4WjwqgEbseDy9ps0";//2024 "1N6z_A3eAImleBXdzky1cbLADQtUOg2fFNlR9pOiTGDs";
-    private static final String RANGE = "tablepress2!A:H";// 2024 "tablepressview2!A:H"; // Fetch columns A to H
 
     // ✅ Read credentials from Render environment variable
     private static final String CREDENTIALS_ENV_VAR = "GOOGLE_CREDENTIALS";
@@ -48,7 +46,7 @@ public class GoogleSheetImporter {
             for (List<Object> row : values) {
                 if (row.size() >= 3) {
                     String parti = PartiMapper.getPartiBogstav(row.get(1).toString());  // Assuming column 1 is parti
-                    String fornavn = row.get(0).toString();  // Assuming column 2 is fornavn
+                    String fornavn = NameFormatter.formatName(row.get(0).toString());  // Assuming column 2 is fornavn
                     String storkreds = row.get(2).toString();  // Assuming column 3 is storkreds
                     String svar1 = row.size() > 3 ? row.get(3).toString() : "";  // Hvis tom, sæt til ""
                     String svar2 = row.size() > 4 ? row.get(4).toString() : "";
@@ -57,7 +55,12 @@ public class GoogleSheetImporter {
                     String svar5 = row.size() > 7 ? row.get(7).toString() : "";
 
                     // Create Survey object with all fields
-                    surveys.add(new Survey(parti, fornavn, storkreds, svar1, svar2, svar3, svar4, svar5));
+                    if (year == 2019L){
+                        surveys.add(new Survey(parti, fornavn, storkreds, "", svar1, "", "", ""));
+                    }
+                    else {
+                        surveys.add(new Survey(parti, fornavn, storkreds, svar1, svar2, svar3, svar4, svar5));
+                    }
                 }
             }
         }

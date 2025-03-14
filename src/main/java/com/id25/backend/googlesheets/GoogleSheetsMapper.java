@@ -9,7 +9,7 @@ class GoogleSheetMapper {
     static {
         sheetMap.put(2024L, new SheetInfo("1N6z_A3eAImleBXdzky1cbLADQtUOg2fFNlR9pOiTGDs", "valg2024!A:H"));
         sheetMap.put(2022L, new SheetInfo("197fjZR2-vYLbyUc_CfmEMT5U_gIqlfuFi2SYeM4rptA", "valg2022!A:H"));
-        sheetMap.put(2019L, new SheetInfo("197fjZR2-vYLbyUc_CfmEMT5U_gIqlfuFi2SYeM4rptA", "valg2019!A:E"));
+        sheetMap.put(2019L, new SheetInfo("197fjZR2-vYLbyUc_CfmEMT5U_gIqlfuFi2SYeM4rptA", "valg2019!A:D"));
     }
 
     public static SheetInfo getSheetInfo(Long year) {
