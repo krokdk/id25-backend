@@ -56,6 +56,9 @@ public class GoogleSheetImporter {
 
                     // Create Survey object with all fields
                     if (year == 2019L){
+                        if (svar1 == "")
+                            continue;
+
                         surveys.add(new Survey(parti, fornavn, storkreds, "", svar1, "", "", ""));
                     }
                     else {
