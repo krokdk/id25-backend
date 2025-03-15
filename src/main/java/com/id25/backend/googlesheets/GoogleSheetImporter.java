@@ -48,7 +48,7 @@ public class GoogleSheetImporter {
                     String parti = PartiMapper.getPartiBogstav(row.get(1).toString());  // Assuming column 1 is parti
                     String fornavn = NameFormatter.formatName(row.get(0).toString());  // Assuming column 2 is fornavn
                     String storkreds = row.get(2).toString();  // Assuming column 3 is storkreds
-                    String svar1 = row.size() > 3 ? row.get(3).toString() : "";  // Hvis tom, sæt til ""
+                    String svar1 = row.size() > 3 ? row.get(3).toString() : "";
                     String svar2 = row.size() > 4 ? row.get(4).toString() : "";
                     String svar3 = row.size() > 5 ? row.get(5).toString() : "";
                     String svar4 = row.size() > 6 ? row.get(6).toString() : "";
@@ -60,8 +60,13 @@ public class GoogleSheetImporter {
                             continue;
 
                         surveys.add(new Survey(parti, fornavn, storkreds, "", svar1, "", "", ""));
-                    }
-                    else {
+                    } else if (year == 2020L) {
+                        if (svar1 == "")
+                            continue;
+
+                        surveys.add(new Survey(parti, fornavn, "", "", svar1, "", "", ""));
+
+                    } else {
                         surveys.add(new Survey(parti, fornavn, storkreds, svar1, svar2, svar3, svar4, svar5));
                     }
                 }
