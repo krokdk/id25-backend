@@ -67,12 +67,19 @@ public class GoogleSheetImporter {
                         surveys.add(new Survey(parti, fornavn, "", "", svar1, "", "", ""));
 
                     } else {
-                        surveys.add(new Survey(parti, fornavn, storkreds, svar1, svar2, svar3, svar4, svar5));
+                        surveys.add(new Survey(parti, fornavn, storkreds, replaceEmptyString(svar1), replaceEmptyString(svar2), replaceEmptyString(svar3), replaceEmptyString(svar4), svar5));
                     }
                 }
             }
         }
         return surveys;
+    }
+
+    private String replaceEmptyString(String input){
+        if (input == "")
+            return "Ikke besvaret";
+
+        return input;
     }
 
     private Sheets getSheetsService() throws IOException, GeneralSecurityException {
