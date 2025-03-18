@@ -44,6 +44,9 @@ public class GoogleSheetImporter {
 
         if (values != null && !values.isEmpty()) {
             for (List<Object> row : values) {
+                if (values.indexOf(row) == 0)
+                    continue;
+
                 if (row.size() >= 3) {
                     String parti = PartiMapper.getPartiBogstav(row.get(1).toString());  // Assuming column 1 is parti
                     String fornavn = NameFormatter.formatName(row.get(0).toString());  // Assuming column 2 is fornavn
