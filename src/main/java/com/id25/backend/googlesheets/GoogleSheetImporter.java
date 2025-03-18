@@ -63,7 +63,7 @@ public class GoogleSheetImporter {
                             continue;
 
                         surveys.add(new Survey(parti, fornavn, storkreds, "", svar1, "", "", ""));
-                    } else if (year == 2020L) {
+                    } else if (year == 2021L) {
                         if (svar1 == "")
                             continue;
 
