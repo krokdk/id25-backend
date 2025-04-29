@@ -1,6 +1,6 @@
-package com.id25.backend;
+package com.id25.backend.dto;
 
-public class Survey {
+public class SurveyDto {
     private String parti;
     private String fornavn;
     private String storkreds;
@@ -12,7 +12,7 @@ public class Survey {
     private String svar5;
 
     // Constructor with all fields
-    public Survey(String parti, String fornavn, String storkreds, String svar1, String svar2, String svar3, String svar4, String svar5) {
+    public SurveyDto(String parti, String fornavn, String storkreds, String svar1, String svar2, String svar3, String svar4, String svar5) {
         this.parti = parti;
         this.fornavn = fornavn;
         this.storkreds = storkreds;

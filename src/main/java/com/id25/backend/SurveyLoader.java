@@ -1,12 +1,14 @@
 package com.id25.backend;
 
+import com.id25.backend.dto.*;
+
 import java.io.*;
 import java.util.*;
 
 public class SurveyLoader {
 
-    public static List<Survey> loadSurveyData(String filename) {
-        List<Survey> surveyList = new ArrayList<>();
+    public static List<SurveyDto> loadSurveyData(String filename) {
+        List<SurveyDto> surveyList = new ArrayList<>();
         BufferedReader reader = null;
 
         try {
@@ -30,7 +32,7 @@ public class SurveyLoader {
                         String answer4 = parts[7];
                         String sentence = parts[8];
 
-                        Survey survey = new Survey(firstEntry, firstName, region, answer1, answer2, answer3, answer4, sentence);
+                        SurveyDto survey = new SurveyDto(firstEntry, firstName, region, answer1, answer2, answer3, answer4, sentence);
                         surveyList.add(survey);
                     }
                 }
