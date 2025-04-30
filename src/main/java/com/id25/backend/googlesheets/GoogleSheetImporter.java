@@ -32,8 +32,9 @@ public class GoogleSheetImporter implements DataImporter {
         this.year = year;
     }
 
+    // vi skal lave en version af denne hvor den kan hente data fra to forskellige sheets?
     public List<SurveyDto> importData() throws GeneralSecurityException, IOException {
-        SheetInfo sheetInfo =GoogleSheetMapper.getSheetInfo(year);
+        SheetInfo sheetInfo = GoogleSheetsMapper.getSheetInfo(year);
 
         Sheets sheetsService = getSheetsService();
         ValueRange response = sheetsService.spreadsheets().values()
@@ -86,7 +87,7 @@ public class GoogleSheetImporter implements DataImporter {
         return input;
     }
 
-    private Sheets getSheetsService() throws IOException, GeneralSecurityException {
+    protected Sheets getSheetsService() throws IOException, GeneralSecurityException {
         HttpTransport transport = GoogleNetHttpTransport.newTrustedTransport();
         GoogleCredential credential;
 

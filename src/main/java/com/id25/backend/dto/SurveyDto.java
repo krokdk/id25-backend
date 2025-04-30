@@ -11,6 +11,8 @@ public class SurveyDto {
     private String svar4;
     private String svar5;
 
+    public SurveyDto(){}
+
     // Constructor with all fields
     public SurveyDto(String parti, String fornavn, String storkreds, String svar1, String svar2, String svar3, String svar4, String svar5) {
         this.parti = parti;
