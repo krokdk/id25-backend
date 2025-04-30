@@ -1,18 +1,20 @@
-package com.id25.backend;
+package com.id25.backend.dto;
 
-public class Survey {
+public class SurveyDto {
     private String parti;
     private String fornavn;
     private String storkreds;
-    private String email;
+    private String url;
     private String svar1;
     private String svar2;
     private String svar3;
     private String svar4;
     private String svar5;
 
+    public SurveyDto(){}
+
     // Constructor with all fields
-    public Survey(String parti, String fornavn, String storkreds, String svar1, String svar2, String svar3, String svar4, String svar5) {
+    public SurveyDto(String parti, String fornavn, String storkreds, String svar1, String svar2, String svar3, String svar4, String svar5) {
         this.parti = parti;
         this.fornavn = fornavn;
         this.storkreds = storkreds;
@@ -48,12 +50,12 @@ public class Survey {
         this.storkreds = storkreds;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUrl() {
+        return url;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getSvar1() {
@@ -103,7 +105,7 @@ public class Survey {
                 "parti='" + parti + '\'' +
                 ", fornavn='" + fornavn + '\'' +
                 ", storkreds='" + storkreds + '\'' +
-                ", email='" + email + '\'' +
+                ", url='" + url + '\'' +
                 ", svar1='" + svar1 + '\'' +
                 ", svar2='" + svar2 + '\'' +
                 ", svar3='" + svar3 + '\'' +

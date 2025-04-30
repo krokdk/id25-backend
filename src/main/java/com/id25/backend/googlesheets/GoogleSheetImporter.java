@@ -8,13 +8,14 @@ import com.google.api.client.json.gson.*;
 import com.google.api.services.sheets.v4.*;
 import com.google.api.services.sheets.v4.model.*;
 import com.id25.backend.*;
+import com.id25.backend.dto.*;
 import com.id25.backend.formatting.*;
 
 import java.io.*;
 import java.security.*;
 import java.util.*;
 
-public class GoogleSheetImporter {
+public class GoogleSheetImporter implements DataImporter {
 
     private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
@@ -31,8 +32,9 @@ public class GoogleSheetImporter {
         this.year = year;
     }
 
-    public List<Survey> importGoogleSheetData() throws GeneralSecurityException, IOException {
-        SheetInfo sheetInfo =GoogleSheetMapper.getSheetInfo(year);
+    // vi skal lave en version af denne hvor den kan hente data fra to forskellige sheets?
+    public List<SurveyDto> importData() throws GeneralSecurityException, IOException {
+        SheetInfo sheetInfo = GoogleSheetsMapper.getSheetInfo(year);
 
         Sheets sheetsService = getSheetsService();
         ValueRange response = sheetsService.spreadsheets().values()
@@ -40,7 +42,7 @@ public class GoogleSheetImporter {
                 .execute();
 
         List<List<Object>> values = response.getValues();
-        List<Survey> surveys = new ArrayList<>();
+        List<SurveyDto> surveys = new ArrayList<>();
 
         if (values != null && !values.isEmpty()) {
             for (List<Object> row : values) {
@@ -62,15 +64,15 @@ public class GoogleSheetImporter {
                         if (svar1 == "")
                             continue;
 
-                        surveys.add(new Survey(parti, fornavn, storkreds, "", svar1, "", "", ""));
+                        surveys.add(new SurveyDto(parti, fornavn, storkreds, "", svar1, "", "", ""));
                     } else if (year == 2021L) {
                         if (svar1 == "")
                             continue;
 
-                        surveys.add(new Survey(parti, fornavn, "", "", svar1, "", "", ""));
+                        surveys.add(new SurveyDto(parti, fornavn, "", "", svar1, "", "", ""));
 
                     } else {
-                        surveys.add(new Survey(parti, fornavn, storkreds, replaceEmptyString(svar1), replaceEmptyString(svar2), replaceEmptyString(svar3), replaceEmptyString(svar4), svar5));
+                        surveys.add(new SurveyDto(parti, fornavn, storkreds, replaceEmptyString(svar1), replaceEmptyString(svar2), replaceEmptyString(svar3), replaceEmptyString(svar4), svar5));
                     }
                 }
             }
@@ -85,7 +87,7 @@ public class GoogleSheetImporter {
         return input;
     }
 
-    private Sheets getSheetsService() throws IOException, GeneralSecurityException {
+    protected Sheets getSheetsService() throws IOException, GeneralSecurityException {
         HttpTransport transport = GoogleNetHttpTransport.newTrustedTransport();
         GoogleCredential credential;
 

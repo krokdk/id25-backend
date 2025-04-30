@@ -1,5 +1,6 @@
 package com.id25.backend;
 
+import com.id25.backend.dto.*;
 import com.id25.backend.googlesheets.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
@@ -16,20 +17,20 @@ import java.util.stream.*;
 public class SurveyController {
 
     private final GoogleSheetImporterFactory googleSheetImporterFactory;
-    private GoogleSheetImporter googleSheetImporter;
-        private Map<Long, List<Survey>> cachedData; // Lokalt cachet data
+    private DataImporter dataImporter;
+    private Map<Long, List<SurveyDto>> cachedData; // Lokalt cachet data
     private Instant lastUpdated;
-    private static final Duration CACHE_DURATION = Duration.ofHours(1); // Cache i 10 minutter
+    private static final Duration CACHE_DURATION = Duration.ofHours(1); // Cache i 1 time
 
     @Autowired
-    public SurveyController(GoogleSheetImporterFactory googleSheetImporterFactory) {
-        this.googleSheetImporterFactory = googleSheetImporterFactory;
+    public SurveyController(GoogleSheetImporterFactory dataImporterFactory) {
+        this.googleSheetImporterFactory = dataImporterFactory;
         this.cachedData = new HashMap<>();
         this.lastUpdated = Instant.MIN;
     }
 
     @GetMapping("/results")
-    public List<Survey> getSurveyData(
+    public List<SurveyDto> getSurveyData(
             @RequestParam(required = false) String parti,
             @RequestParam(required = false) String fornavn,
             @RequestParam(required = false) String storkreds,
@@ -38,11 +39,12 @@ public class SurveyController {
             @RequestParam(required = false) String svar3,
             @RequestParam(required = false) String svar4,
             @RequestParam(required = false) String svar5,
+            @RequestParam(required = false) String url,
             @RequestParam(required = false) Long year
     ) throws GeneralSecurityException, IOException {
         if (cachedData.isEmpty() || !cachedData.containsKey(year) || Duration.between(lastUpdated, Instant.now()).compareTo(CACHE_DURATION) > 0) {
-            googleSheetImporter = googleSheetImporterFactory.getImporter(year);
-            cachedData.put(year, googleSheetImporter.importGoogleSheetData()); // Henter friske data
+            dataImporter = googleSheetImporterFactory.getImporter(year);
+            cachedData.put(year, dataImporter.importData()); // Henter friske data
             lastUpdated = Instant.now();
         }
         return cachedData.get(year).stream()
@@ -54,6 +56,7 @@ public class SurveyController {
                 .filter(s -> svar3 == null || s.getSvar3().equalsIgnoreCase(svar3))
                 .filter(s -> svar4 == null || s.getSvar4().equalsIgnoreCase(svar4))
                 .filter(s -> svar5 == null || s.getSvar5().equalsIgnoreCase(svar5))
+                .filter(s -> url == null || s.getUrl().equalsIgnoreCase(url))
                 .collect(Collectors.toList());
     }
 
@@ -62,7 +65,7 @@ public class SurveyController {
 
         cachedData.replaceAll((key, value) -> {
             try {
-                return googleSheetImporterFactory.getImporter(key).importGoogleSheetData();
+                return googleSheetImporterFactory.getImporter(key).importData();
             } catch (GeneralSecurityException | IOException e) {
                 throw new RuntimeException(e);
             }

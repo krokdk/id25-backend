@@ -1,5 +1,6 @@
 package com.id25.backend;
 
+import com.id25.backend.dto.*;
 import com.id25.backend.googlesheets.*;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
@@ -10,21 +11,86 @@ import static org.junit.jupiter.api.Assertions.*;
 class GoogleSheetImporterTest {
 
     @Test
-    void testImportGoogleSheetData() {
+    void testImportGoogleSheetData_2024() {
         GoogleSheetImporter importer = new GoogleSheetImporter(2024L);
 
         try {
-            List<Survey> surveys = importer.importGoogleSheetData();
+            List<SurveyDto> surveys = importer.importData();
 
             // 🔹 Sikrer at vi har fået data tilbage
             assertNotNull(surveys, "Liste må ikke være null");
             assertFalse(surveys.isEmpty(), "Liste må ikke være tom");
 
             // 🔹 Validerer en tilfældig værdi
-            Survey firstSurvey = surveys.get(0);
+            SurveyDto firstSurvey = surveys.get(0);
             assertNotNull(firstSurvey.getFornavn(), "Fornavn må ikke være null");
             assertNotNull(firstSurvey.getParti(), "Parti må ikke være null");
-            assertNotNull(firstSurvey.getEmail(), "Parti må ikke være null");
+            assertNotNull(firstSurvey.getStorkreds(), "Parti må ikke være null");
+
+        } catch (IOException | GeneralSecurityException e) {
+            fail("Fejl ved import af Google Sheet-data: " + e.getMessage());
+        }
+    }
+
+    @Test
+    void testImportGoogleSheetData_2022() {
+        GoogleSheetImporter importer = new GoogleSheetImporter(2022L);
+
+        try {
+            List<SurveyDto> surveys = importer.importData();
+
+            // 🔹 Sikrer at vi har fået data tilbage
+            assertNotNull(surveys, "Liste må ikke være null");
+            assertFalse(surveys.isEmpty(), "Liste må ikke være tom");
+
+            // 🔹 Validerer en tilfældig værdi
+            SurveyDto firstSurvey = surveys.get(0);
+            assertNotNull(firstSurvey.getFornavn(), "Fornavn må ikke være null");
+            assertNotNull(firstSurvey.getParti(), "Parti må ikke være null");
+            assertNotNull(firstSurvey.getStorkreds(), "Parti må ikke være null");
+
+        } catch (IOException | GeneralSecurityException e) {
+            fail("Fejl ved import af Google Sheet-data: " + e.getMessage());
+        }
+    }
+
+    @Test
+    void testImportGoogleSheetData_2021() {
+        GoogleSheetImporter importer = new GoogleSheetImporter(2021L);
+
+        try {
+            List<SurveyDto> surveys = importer.importData();
+
+            // 🔹 Sikrer at vi har fået data tilbage
+            assertNotNull(surveys, "Liste må ikke være null");
+            assertFalse(surveys.isEmpty(), "Liste må ikke være tom");
+
+            // 🔹 Validerer en tilfældig værdi
+            SurveyDto firstSurvey = surveys.get(0);
+            assertNotNull(firstSurvey.getFornavn(), "Fornavn må ikke være null");
+            assertNotNull(firstSurvey.getParti(), "Parti må ikke være null");
+            assertNotNull(firstSurvey.getStorkreds(), "Parti må ikke være null");
+
+        } catch (IOException | GeneralSecurityException e) {
+            fail("Fejl ved import af Google Sheet-data: " + e.getMessage());
+        }
+    }
+
+    @Test
+    void testImportGoogleSheetData_2019() {
+        GoogleSheetImporter importer = new GoogleSheetImporter(2019L);
+
+        try {
+            List<SurveyDto> surveys = importer.importData();
+
+            // 🔹 Sikrer at vi har fået data tilbage
+            assertNotNull(surveys, "Liste må ikke være null");
+            assertFalse(surveys.isEmpty(), "Liste må ikke være tom");
+
+            // 🔹 Validerer en tilfældig værdi
+            SurveyDto firstSurvey = surveys.get(0);
+            assertNotNull(firstSurvey.getFornavn(), "Fornavn må ikke være null");
+            assertNotNull(firstSurvey.getParti(), "Parti må ikke være null");
             assertNotNull(firstSurvey.getStorkreds(), "Parti må ikke være null");
 
         } catch (IOException | GeneralSecurityException e) {

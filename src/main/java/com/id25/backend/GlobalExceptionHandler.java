@@ -1,4 +1,4 @@
-package com.id25.backend.googlesheets;
+package com.id25.backend;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
