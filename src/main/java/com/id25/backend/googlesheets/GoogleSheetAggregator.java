@@ -93,7 +93,10 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
                 };
             }
         }
-        return new String[]{"", "", "", "", ""};
+
+        String ikkeBesvaret = "Ikke besvaret";
+
+        return new String[]{ikkeBesvaret, ikkeBesvaret, ikkeBesvaret, ikkeBesvaret, ikkeBesvaret};
     }
 
     private String getEmail(List<Object> contact) {
