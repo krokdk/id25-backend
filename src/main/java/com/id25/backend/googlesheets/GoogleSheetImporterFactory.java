@@ -8,6 +8,10 @@ public class GoogleSheetImporterFactory {
 
     public DataImporter getImporter(Long year) {
         Long lookupYear = year == null ? 2024L : year;
+
+        if (year == 2025L)
+            return new GoogleSheetAggregator(0L);
+
         return new GoogleSheetImporter(lookupYear);
     }
 }

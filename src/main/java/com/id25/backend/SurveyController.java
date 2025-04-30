@@ -39,6 +39,7 @@ public class SurveyController {
             @RequestParam(required = false) String svar3,
             @RequestParam(required = false) String svar4,
             @RequestParam(required = false) String svar5,
+            @RequestParam(required = false) String url,
             @RequestParam(required = false) Long year
     ) throws GeneralSecurityException, IOException {
         if (cachedData.isEmpty() || !cachedData.containsKey(year) || Duration.between(lastUpdated, Instant.now()).compareTo(CACHE_DURATION) > 0) {
@@ -55,6 +56,7 @@ public class SurveyController {
                 .filter(s -> svar3 == null || s.getSvar3().equalsIgnoreCase(svar3))
                 .filter(s -> svar4 == null || s.getSvar4().equalsIgnoreCase(svar4))
                 .filter(s -> svar5 == null || s.getSvar5().equalsIgnoreCase(svar5))
+                .filter(s -> url == null || s.getUrl().equalsIgnoreCase(url))
                 .collect(Collectors.toList());
     }
 

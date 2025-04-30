@@ -4,7 +4,7 @@ public class SurveyDto {
     private String parti;
     private String fornavn;
     private String storkreds;
-    private String email;
+    private String url;
     private String svar1;
     private String svar2;
     private String svar3;
@@ -50,12 +50,12 @@ public class SurveyDto {
         this.storkreds = storkreds;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUrl() {
+        return url;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getSvar1() {
@@ -105,7 +105,7 @@ public class SurveyDto {
                 "parti='" + parti + '\'' +
                 ", fornavn='" + fornavn + '\'' +
                 ", storkreds='" + storkreds + '\'' +
-                ", email='" + email + '\'' +
+                ", url='" + url + '\'' +
                 ", svar1='" + svar1 + '\'' +
                 ", svar2='" + svar2 + '\'' +
                 ", svar3='" + svar3 + '\'' +

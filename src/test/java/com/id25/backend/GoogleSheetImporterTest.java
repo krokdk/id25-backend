@@ -25,7 +25,7 @@ class GoogleSheetImporterTest {
             SurveyDto firstSurvey = surveys.get(0);
             assertNotNull(firstSurvey.getFornavn(), "Fornavn må ikke være null");
             assertNotNull(firstSurvey.getParti(), "Parti må ikke være null");
-            assertNotNull(firstSurvey.getEmail(), "Parti må ikke være null");
+            assertNotNull(firstSurvey.getUrl(), "Parti må ikke være null");
             assertNotNull(firstSurvey.getStorkreds(), "Parti må ikke være null");
 
         } catch (IOException | GeneralSecurityException e) {

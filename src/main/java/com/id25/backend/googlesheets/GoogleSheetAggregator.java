@@ -8,32 +8,24 @@ import java.io.*;
 import java.security.*;
 import java.util.*;
 
-
-// kald denne fra en test
 public class GoogleSheetAggregator extends GoogleSheetImporter {
-//https://docs.google.com/spreadsheets/d/1T-aCGnZ5DTK-sF1lZyqV8wGMtsGCddm1VLBaF4fCjW8/edit?usp=sharing
-    SheetInfo contactSheetInfo = new SheetInfo("1T-aCGnZ5DTK-sF1lZyqV8wGMtsGCddm1VLBaF4fCjW8", "F!A:F");
+
+    Set<String> allePartier = Set.of("A","B","C","D","F","I","M","O","V","Æ","Ø","Å");
 
     private SheetInfo getSheetInfoForParty(String parti) {
         return new SheetInfo("1T-aCGnZ5DTK-sF1lZyqV8wGMtsGCddm1VLBaF4fCjW8", parti + "!A:F");
     }
 
-    //https://docs.google.com/spreadsheets/d/1AAeZoCS3K1sFiJqaeuYDktUL-xf2omBXIxs-_ZzfcRg/edit?usp=sharing
     SheetInfo surverResultSheetInfo = new SheetInfo("1AAeZoCS3K1sFiJqaeuYDktUL-xf2omBXIxs-_ZzfcRg", "svar!A:I");
 
     public GoogleSheetAggregator(Long year) {
         super(year);
     }
 
-
     @Override
     public List<SurveyDto> importData() throws GeneralSecurityException, IOException {
 
         Sheets sheetsService = getSheetsService();
-
-
-        var allePartier = Set.of("A","B","C","D","F","I","M","O","V","Æ","Ø","Å");
-
 
         List<List<Object>> kandidater = new ArrayList<>();
 
@@ -60,22 +52,30 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
 
             String[] surveyAnswers = getSurveyAnswers(email, responseSurveyResults.getValues());
 
+            SurveyDto dto = new SurveyDto();
+            dto.setFornavn(contact.get(3).toString());
+            dto.setParti(contact.get(0).toString());
+            dto.setStorkreds(contact.get(1).toString());
+            dto.setUrl(getUrl(contact));
+            dto.setSvar1(surveyAnswers[0]);
+            dto.setSvar2(surveyAnswers[1]);
+            dto.setSvar3(surveyAnswers[2]);
+            dto.setSvar4(surveyAnswers[3]);
+            dto.setSvar5(surveyAnswers[4]);
 
-            SurveyDto foo = new SurveyDto();
-            foo.setFornavn(contact.get(3).toString());
-            foo.setParti(contact.get(0).toString());
-            foo.setStorkreds(contact.get(1).toString());
-            foo.setSvar1(surveyAnswers[0]);
-            foo.setSvar2(surveyAnswers[1]);
-            foo.setSvar3(surveyAnswers[2]);
-            foo.setSvar4(surveyAnswers[3]);
-            foo.setSvar5(surveyAnswers[4]);
-
-            surveys.add(foo);
+            surveys.add(dto);
         }
 
 
         return surveys;
+    }
+
+    private String getUrl(List<Object> contact) {
+
+        if (contact.size() > 5)
+            return (String) contact.get(5);
+
+        return "";
     }
 
     private String[] getSurveyAnswers(String email, List<List<Object>> responseSurveyResults) {
