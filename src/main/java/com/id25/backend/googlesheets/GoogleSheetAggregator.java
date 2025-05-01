@@ -3,6 +3,7 @@ package com.id25.backend.googlesheets;
 import com.google.api.services.sheets.v4.*;
 import com.google.api.services.sheets.v4.model.*;
 import com.id25.backend.dto.*;
+import com.id25.backend.formatting.*;
 
 import java.io.*;
 import java.security.*;
@@ -54,7 +55,7 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
 
             SurveyDto dto = new SurveyDto();
             dto.setFornavn(contact.get(3).toString());
-            dto.setParti(contact.get(0).toString());
+            dto.setParti(PartiMapper.getPartiBogstav(contact.get(0).toString()));
             dto.setStorkreds(contact.get(1).toString());
             dto.setUrl(getUrl(contact));
             dto.setSvar1(surveyAnswers[0]);

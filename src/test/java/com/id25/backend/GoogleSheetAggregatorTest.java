@@ -42,7 +42,7 @@ public class GoogleSheetAggregatorTest {
 
             SurveyDto survey = sigurd.get();
             assertEquals( "Sigurd Agersnap",survey.getFornavn());
-            assertEquals("Socialistisk Folkeparti",survey.getParti());
+            assertEquals("F",survey.getParti());
             assertEquals("https://sf.dk/politiker/sigurd-agersnap", survey.getUrl());
             assertEquals("Københavns omegn",survey.getStorkreds());
             assertEquals("nej", survey.getSvar1());
@@ -68,7 +68,7 @@ public class GoogleSheetAggregatorTest {
 
             SurveyDto survey = suzette.get();
             assertEquals( "Suzette Frovin",survey.getFornavn());
-            assertEquals("Socialistisk Folkeparti",survey.getParti());
+            assertEquals("F",survey.getParti());
             assertEquals("https://sf.dk/politiker/suzette-frovin", survey.getUrl());
             assertEquals("Fyn",survey.getStorkreds());
             assertEquals("", survey.getSvar1());
