@@ -14,7 +14,7 @@ public class GoogleSheetAggregatorTest {
 
     @Test
     public void hulIgennem() {
-        GoogleSheetAggregator importer = new GoogleSheetAggregator(0L);
+        GoogleSheetAggregator importer = new GoogleSheetAggregator(2025L);
         try {
             List<SurveyDto> surveys = importer.importData();
 
@@ -29,22 +29,22 @@ public class GoogleSheetAggregatorTest {
 
     @Test
     public void contactMedSurveySvar() {
-        GoogleSheetAggregator importer = new GoogleSheetAggregator(0L);
+        GoogleSheetAggregator importer = new GoogleSheetAggregator(2025L);
         try {
             List<SurveyDto> surveys = importer.importData();
 
             var sigurd= surveys
                     .stream()
-                    .filter(x->"Sigurd Agersnap".equalsIgnoreCase(x.getFornavn()))
+                    .filter(x->"Stuffi Rok".equalsIgnoreCase(x.getFornavn()))
                     .findFirst();
 
             assertTrue(sigurd.isPresent());
 
             SurveyDto survey = sigurd.get();
-            assertEquals( "Sigurd Agersnap",survey.getFornavn());
-            assertEquals("F",survey.getParti());
-            assertEquals("https://sf.dk/politiker/sigurd-agersnap", survey.getUrl());
-            assertEquals("Københavns omegn",survey.getStorkreds());
+            assertEquals( "Stuffi Rok",survey.getFornavn());
+            assertEquals("UKENDT",survey.getParti());
+            assertEquals("https://id25-react.onrender.com/", survey.getUrl());
+            assertEquals("København",survey.getStorkreds());
             assertEquals("nej", survey.getSvar1());
             assertEquals("skide godt!", survey.getSvar5());
 
@@ -55,7 +55,7 @@ public class GoogleSheetAggregatorTest {
 
     @Test
     public void contactUdenSurveySvar() {
-        GoogleSheetAggregator importer = new GoogleSheetAggregator(0L);
+        GoogleSheetAggregator importer = new GoogleSheetAggregator(2025L);
         try {
             List<SurveyDto> surveys = importer.importData();
 
@@ -71,8 +71,34 @@ public class GoogleSheetAggregatorTest {
             assertEquals("F",survey.getParti());
             assertEquals("https://sf.dk/politiker/suzette-frovin", survey.getUrl());
             assertEquals("Fyn",survey.getStorkreds());
-            assertEquals("", survey.getSvar1());
-            assertEquals("", survey.getSvar5());
+            assertEquals("Ikke besvaret", survey.getSvar1());
+            assertEquals("Ikke besvaret", survey.getSvar5());
+
+        } catch (IOException | GeneralSecurityException e) {
+            fail("Fejl ved import af Google Sheet-data: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void svarFraTallySurveyHvorKunEmailKendes() {
+        GoogleSheetAggregator importer = new GoogleSheetAggregator(9999L);
+        try {
+            List<SurveyDto> surveys = importer.importData();
+
+            var kandidat= surveys
+                    .stream()
+                    .filter(x->"Stuffi Rok".equalsIgnoreCase(x.getFornavn()))
+                    .findFirst();
+
+            assertTrue(kandidat.isPresent());
+
+            SurveyDto survey = kandidat.get();
+            assertEquals( "Stuffi Rok",survey.getFornavn());
+            assertEquals("UKENDT",survey.getParti());
+            assertEquals("https://id25-react.onrender.com/", survey.getUrl());
+            assertEquals("København",survey.getStorkreds());
+            assertEquals("Nej", survey.getSvar1());
+            assertEquals("tally ho!", survey.getSvar5());
 
         } catch (IOException | GeneralSecurityException e) {
             fail("Fejl ved import af Google Sheet-data: " + e.getMessage());

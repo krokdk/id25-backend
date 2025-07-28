@@ -11,13 +11,13 @@ import java.util.*;
 
 public class GoogleSheetAggregator extends GoogleSheetImporter {
 
-    Set<String> allePartier = Set.of("A","B","C","D","F","I","M","O","V","Æ","Ø","Å");
+    Set<String> allePartier = Set.of("A","B","C","D","F","I","M","O","V","Æ","Ø","Å","U");
 
     private SheetInfo getSheetInfoForParty(String parti) {
+
+      // denne sheet id burde ikke ligge her i klassen.
         return new SheetInfo("1T-aCGnZ5DTK-sF1lZyqV8wGMtsGCddm1VLBaF4fCjW8", parti + "!A:F");
     }
-
-    SheetInfo surverResultSheetInfo = new SheetInfo("1AAeZoCS3K1sFiJqaeuYDktUL-xf2omBXIxs-_ZzfcRg", "svar!A:I");
 
     public GoogleSheetAggregator(Long year) {
         super(year);
@@ -38,13 +38,14 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
                     .execute()
                     .getValues();
 
-            kandidater.addAll(kandidaterForParti.subList(1,kandidaterForParti.size()));
+            kandidater.addAll(kandidaterForParti.subList(1, kandidaterForParti.size()));
         }
+
+        SheetInfo surverResultSheetInfo = GoogleSheetsMapper.getSheetInfo(year);
 
         ValueRange responseSurveyResults = sheetsService.spreadsheets().values()
                 .get(surverResultSheetInfo.getSheetId(), surverResultSheetInfo.getRange())
                 .execute();
-
 
         List<SurveyDto> surveys = new ArrayList<>();
         for (var contact : kandidater){
@@ -67,7 +68,6 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
             surveys.add(dto);
         }
 
-
         return surveys;
     }
 
@@ -83,15 +83,25 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
 
         for (List<Object> result : responseSurveyResults) {
 
-            if (result.get(1) != null && result.get(1).toString().equals(email)) {
+            if (result.get(1) != null) {
 
-                return new String[]{
-                        (String) result.get(4),
-                        (String) result.get(5),
-                        (String) result.get(6),
-                        (String) result.get(7),
-                        (String) result.get(8),
-                };
+                if (year == 9999L && result.get(0).toString().equals(email)) //for tally har jeg skåret de tomme kolonner væk
+                    return new String[]{
+                            (String) result.get(1),
+                            (String) result.get(2),
+                            (String) result.get(3),
+                            (String) result.get(4),
+                            (String) result.get(5),
+                    };
+
+                if (result.get(1).toString().equals(email))
+                    return new String[]{
+                            (String) result.get(4),
+                            (String) result.get(5),
+                            (String) result.get(6),
+                            (String) result.get(7),
+                            (String) result.get(8),
+                    };
             }
         }
 

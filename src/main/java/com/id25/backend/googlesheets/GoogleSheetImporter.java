@@ -25,7 +25,7 @@ public class GoogleSheetImporter implements DataImporter {
 
     // 🔹 Filsti til credentials i lokal udvikling
     private static final String CREDENTIALS_FILE_PATH = "google-credentials.json";
-    private final Long year;
+    protected Long year;
 
     public GoogleSheetImporter(Long year) {
 
