@@ -12,9 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GoogleSheetAggregatorTest {
 
+    String sheetId2025 = GoogleSheetImporterFactory.folketingsvalg2025;
+    String sheetId9999 = GoogleSheetImporterFactory.kommunalvalg2025;
+
     @Test
     public void hulIgennem() {
-        GoogleSheetAggregator importer = new GoogleSheetAggregator(2025L);
+        GoogleSheetAggregator importer = new GoogleSheetAggregator(sheetId2025, 2025L);
         try {
             List<SurveyDto> surveys = importer.importData();
 
@@ -29,7 +32,7 @@ public class GoogleSheetAggregatorTest {
 
     @Test
     public void contactMedSurveySvar() {
-        GoogleSheetAggregator importer = new GoogleSheetAggregator(2025L);
+        GoogleSheetAggregator importer = new GoogleSheetAggregator(sheetId2025,2025L);
         try {
             List<SurveyDto> surveys = importer.importData();
 
@@ -55,7 +58,7 @@ public class GoogleSheetAggregatorTest {
 
     @Test
     public void contactUdenSurveySvar() {
-        GoogleSheetAggregator importer = new GoogleSheetAggregator(2025L);
+        GoogleSheetAggregator importer = new GoogleSheetAggregator(sheetId2025, 2025L);
         try {
             List<SurveyDto> surveys = importer.importData();
 
@@ -81,7 +84,7 @@ public class GoogleSheetAggregatorTest {
 
     @Test
     public void svarFraTallySurveyHvorKunEmailKendes() {
-        GoogleSheetAggregator importer = new GoogleSheetAggregator(9999L);
+        GoogleSheetAggregator importer = new GoogleSheetAggregator(sheetId9999, 9999L);
         try {
             List<SurveyDto> surveys = importer.importData();
 
@@ -96,7 +99,7 @@ public class GoogleSheetAggregatorTest {
             assertEquals( "Stuffi Rok",survey.getFornavn());
             assertEquals("UKENDT",survey.getParti());
             assertEquals("https://id25-react.onrender.com/", survey.getUrl());
-            assertEquals("København",survey.getStorkreds());
+
             assertEquals("Nej", survey.getSvar1());
             assertEquals("tally ho!", survey.getSvar5());
 

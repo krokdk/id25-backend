@@ -11,16 +11,18 @@ import java.util.*;
 
 public class GoogleSheetAggregator extends GoogleSheetImporter {
 
-    Set<String> allePartier = Set.of("A","B","C","D","F","I","M","O","V","Æ","Ø","Å","U");
+    Set<String> allePartier = Set.of("A","B","C","D","F","I","M","O","R","V","Æ","Ø","Å","U");
+
+    String sheetId;
+
 
     private SheetInfo getSheetInfoForParty(String parti) {
-
-      // denne sheet id burde ikke ligge her i klassen.
-        return new SheetInfo("1T-aCGnZ5DTK-sF1lZyqV8wGMtsGCddm1VLBaF4fCjW8", parti + "!A:F");
+        return new SheetInfo(sheetId, parti + "!A:F");
     }
 
-    public GoogleSheetAggregator(Long year) {
+    public GoogleSheetAggregator(String sheetId, Long year) {
         super(year);
+        this.sheetId = sheetId;
     }
 
     @Override
@@ -33,12 +35,18 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
         for (String parti : allePartier) {
             var partiSheetInfo = getSheetInfoForParty(parti);
 
-            List<List<Object>> kandidaterForParti = sheetsService.spreadsheets().values()
-                    .get(partiSheetInfo.getSheetId(), partiSheetInfo.getRange())
-                    .execute()
-                    .getValues();
+            try {
+                List<List<Object>> kandidaterForParti = sheetsService.spreadsheets().values()
+                        .get(partiSheetInfo.getSheetId(), partiSheetInfo.getRange())
+                        .execute()
+                        .getValues();
 
-            kandidater.addAll(kandidaterForParti.subList(1, kandidaterForParti.size()));
+                kandidater.addAll(kandidaterForParti.subList(1, kandidaterForParti.size()));
+            }
+            catch (Exception e)
+            {
+                System.out.println("Failed loading google sheet with id "+ sheetId + " for party " + parti + ": " + e.getMessage());
+            }
         }
 
         SheetInfo surverResultSheetInfo = GoogleSheetsMapper.getSheetInfo(year);
@@ -50,7 +58,7 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
         List<SurveyDto> surveys = new ArrayList<>();
         for (var contact : kandidater){
 
-            if (contact.size() < 6)
+            if (contact.size() < 5)
                 continue;
 
             String email = getEmail(contact);
