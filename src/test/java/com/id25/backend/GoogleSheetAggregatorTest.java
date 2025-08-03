@@ -14,6 +14,7 @@ public class GoogleSheetAggregatorTest {
 
     String sheetId2025 = GoogleSheetImporterFactory.folketingsvalg2025;
     String sheetId9999 = GoogleSheetImporterFactory.kommunalvalg2025;
+    String sheetId8888 = GoogleSheetImporterFactory.regionsrådsvalg2025;
 
     @Test
     public void hulIgennem() {
@@ -85,6 +86,32 @@ public class GoogleSheetAggregatorTest {
     @Test
     public void svarFraTallySurveyHvorKunEmailKendes() {
         GoogleSheetAggregator importer = new GoogleSheetAggregator(sheetId9999, 9999L);
+        try {
+            List<SurveyDto> surveys = importer.importData();
+
+            var kandidat= surveys
+                    .stream()
+                    .filter(x->"Stuffi Rok".equalsIgnoreCase(x.getFornavn()))
+                    .findFirst();
+
+            assertTrue(kandidat.isPresent());
+
+            SurveyDto survey = kandidat.get();
+            assertEquals( "Stuffi Rok",survey.getFornavn());
+            assertEquals("UKENDT",survey.getParti());
+            assertEquals("https://id25-react.onrender.com/", survey.getUrl());
+
+            assertEquals("Nej", survey.getSvar1());
+            assertEquals("tally ho!", survey.getSvar5());
+
+        } catch (IOException | GeneralSecurityException e) {
+            fail("Fejl ved import af Google Sheet-data: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void svarFraTallyForRegionsrådsvalg() {
+        GoogleSheetAggregator importer = new GoogleSheetAggregator(sheetId8888, 8888L);
         try {
             List<SurveyDto> surveys = importer.importData();
 
