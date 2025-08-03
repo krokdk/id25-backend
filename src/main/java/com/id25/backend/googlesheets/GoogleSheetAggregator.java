@@ -50,6 +50,9 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
         List<SurveyDto> surveys = new ArrayList<>();
         for (var contact : kandidater){
 
+            if (contact.size() < 6)
+                continue;
+
             String email = getEmail(contact);
 
             String[] surveyAnswers = getSurveyAnswers(email, responseSurveyResults.getValues());
@@ -94,7 +97,7 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
                             (String) result.get(5),
                     };
 
-                if (result.get(1).toString().equals(email))
+                if (year == 2025L && result.get(1).toString().equals(email))
                     return new String[]{
                             (String) result.get(4),
                             (String) result.get(5),
