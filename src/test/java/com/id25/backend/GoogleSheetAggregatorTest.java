@@ -48,7 +48,7 @@ public class GoogleSheetAggregatorTest {
             assertEquals( "Stuffi Rok",survey.getFornavn());
             assertEquals("UKENDT",survey.getParti());
             assertEquals("https://id25-react.onrender.com/", survey.getUrl());
-            assertEquals("København",survey.getStorkreds());
+            assertEquals("Amar",survey.getStorkreds());
             assertEquals("nej", survey.getSvar1());
             assertEquals("skide godt!", survey.getSvar5());
 
@@ -74,7 +74,8 @@ public class GoogleSheetAggregatorTest {
             assertEquals( "Suzette Frovin",survey.getFornavn());
             assertEquals("F",survey.getParti());
             assertEquals("https://sf.dk/politiker/suzette-frovin", survey.getUrl());
-            assertEquals("Fyn",survey.getStorkreds());
+            assertEquals("",survey.getStorkreds());
+            assertEquals("Fyn",survey.getValg());
             assertEquals("Ikke besvaret", survey.getSvar1());
             assertEquals("Ikke besvaret", survey.getSvar5());
 

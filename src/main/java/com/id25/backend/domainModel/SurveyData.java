@@ -4,5 +4,6 @@ public class SurveyData {
     public String Parti;
     public String Kreds;
     public String Storkreds;
+    public String Valg;
     public Integer Year;
 }

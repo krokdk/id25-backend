@@ -68,7 +68,8 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
             SurveyDto dto = new SurveyDto();
             dto.setFornavn(contact.get(3).toString());
             dto.setParti(PartiMapper.getPartiBogstav(contact.get(0).toString()));
-            dto.setStorkreds(contact.get(1).toString());
+            dto.setValg(contact.get(1).toString());
+            dto.setStorkreds(contact.get(2).toString());
             dto.setUrl(getUrl(contact));
             dto.setSvar1(surveyAnswers[0]);
             dto.setSvar2(surveyAnswers[1]);

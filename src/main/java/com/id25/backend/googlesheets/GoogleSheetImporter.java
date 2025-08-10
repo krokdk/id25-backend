@@ -32,7 +32,7 @@ public class GoogleSheetImporter implements DataImporter {
         this.year = year;
     }
 
-    // vi skal lave en version af denne hvor den kan hente data fra to forskellige sheets?
+
     public List<SurveyDto> importData() throws GeneralSecurityException, IOException {
         SheetInfo sheetInfo = GoogleSheetsMapper.getSheetInfo(year);
 
@@ -52,7 +52,8 @@ public class GoogleSheetImporter implements DataImporter {
                 if (row.size() >= 3) {
                     String parti = PartiMapper.getPartiBogstav(row.get(1).toString());  // Assuming column 1 is parti
                     String fornavn = NameFormatter.formatName(row.get(0).toString());  // Assuming column 2 is fornavn
-                    String storkreds = row.get(2).toString();  // Assuming column 3 is storkreds
+                    String valg = row.get(1).toString();
+                    String storkreds = row.get(2).toString();
                     String svar1 = row.size() > 3 ? row.get(3).toString() : "";
                     String svar2 = row.size() > 4 ? row.get(4).toString() : "";
                     String svar3 = row.size() > 5 ? row.get(5).toString() : "";
@@ -64,15 +65,15 @@ public class GoogleSheetImporter implements DataImporter {
                         if (svar1 == "")
                             continue;
 
-                        surveys.add(new SurveyDto(parti, fornavn, storkreds, "", svar1, "", "", ""));
+                        surveys.add(new SurveyDto(parti, fornavn, storkreds, valg, "", svar1, "", "", ""));
                     } else if (year == 2021L) {
                         if (svar1 == "")
                             continue;
 
-                        surveys.add(new SurveyDto(parti, fornavn, "", "", svar1, "", "", ""));
+                        surveys.add(new SurveyDto(parti, fornavn, "", valg, "", svar1, "", "", ""));
 
                     } else {
-                        surveys.add(new SurveyDto(parti, fornavn, storkreds, replaceEmptyString(svar1), replaceEmptyString(svar2), replaceEmptyString(svar3), replaceEmptyString(svar4), svar5));
+                        surveys.add(new SurveyDto(parti, fornavn, storkreds, "",replaceEmptyString(svar1), replaceEmptyString(svar2), replaceEmptyString(svar3), replaceEmptyString(svar4), svar5));
                     }
                 }
             }

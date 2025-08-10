@@ -14,6 +14,7 @@ public class SurveyDtoMapper {
                 surveyResult.surveyData.Parti,
                 kandidat.Name,
                 surveyResult.surveyData.Storkreds,
+                surveyResult.surveyData.Valg,
                 surveyResult.results.get(0),
                 surveyResult.results.get(1),
                 surveyResult.results.get(2),

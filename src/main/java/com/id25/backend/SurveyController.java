@@ -51,6 +51,7 @@ public class SurveyController {
                 .filter(s -> parti == null || s.getParti().equalsIgnoreCase(parti))
                 .filter(s -> fornavn == null || s.getFornavn().equalsIgnoreCase(fornavn))
                 .filter(s -> storkreds == null || s.getStorkreds().equalsIgnoreCase(fornavn))
+                .filter(s -> storkreds == null || s.getStorkreds().equalsIgnoreCase(fornavn))
                 .filter(s -> svar1 == null || s.getSvar1().equalsIgnoreCase(svar1))
                 .filter(s -> svar2 == null || s.getSvar2().equalsIgnoreCase(svar2))
                 .filter(s -> svar3 == null || s.getSvar3().equalsIgnoreCase(svar3))
