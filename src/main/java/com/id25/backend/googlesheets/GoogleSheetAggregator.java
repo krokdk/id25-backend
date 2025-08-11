@@ -66,7 +66,7 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
             String[] surveyAnswers = getSurveyAnswers(email, responseSurveyResults.getValues());
 
             SurveyDto dto = new SurveyDto();
-            dto.setFornavn(contact.get(3).toString());
+            dto.setFornavn(NameFormatter.formatName(contact.get(3).toString()));
             dto.setParti(PartiMapper.getPartiBogstav(contact.get(0).toString()));
             dto.setValg(contact.get(1).toString());
             dto.setStorkreds(contact.get(2).toString());
