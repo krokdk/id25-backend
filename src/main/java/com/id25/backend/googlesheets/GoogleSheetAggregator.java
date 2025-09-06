@@ -103,7 +103,7 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
                             (String) result.get(2),
                             (String) result.get(3),
                             (String) result.get(4),
-                            (String) result.get(5),
+                            "",
                     };
 
                 if (year == 2025L && result.get(1).toString().equals(email))
@@ -112,7 +112,7 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
                             (String) result.get(5),
                             (String) result.get(6),
                             (String) result.get(7),
-                            (String) result.get(8),
+                            "",
                     };
             }
         }
