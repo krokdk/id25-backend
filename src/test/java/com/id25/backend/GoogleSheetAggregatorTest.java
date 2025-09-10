@@ -103,7 +103,7 @@ public class GoogleSheetAggregatorTest {
             assertEquals("https://id25-react.onrender.com/", survey.getUrl());
 
             assertEquals("Nej", survey.getSvar1());
-            assertEquals("tally ho!", survey.getSvar5());
+            assertEquals("tally ho!", survey.getSvar4());
 
         } catch (IOException | GeneralSecurityException e) {
             fail("Fejl ved import af Google Sheet-data: " + e.getMessage());
@@ -129,7 +129,7 @@ public class GoogleSheetAggregatorTest {
             assertEquals("https://id25-react.onrender.com/", survey.getUrl());
 
             assertEquals("Nej", survey.getSvar1());
-            assertEquals("tally ho!", survey.getSvar5());
+            assertEquals("Skide godt!", survey.getSvar4());
 
         } catch (IOException | GeneralSecurityException e) {
             fail("Fejl ved import af Google Sheet-data: " + e.getMessage());

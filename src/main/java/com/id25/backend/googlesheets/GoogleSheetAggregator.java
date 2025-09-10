@@ -112,7 +112,7 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
                             (String) result.get(5),
                             (String) result.get(6),
                             (String) result.get(7),
-                            "",
+                            (String) result.get(8),
                     };
             }
         }
