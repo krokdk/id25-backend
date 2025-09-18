@@ -12,7 +12,13 @@ import java.util.*;
 import java.util.stream.*;
 
 @RestController
-@CrossOrigin(origins = {"https://id25-react.onrender.com", "https://id25-komregvalg.onrender.com", "http://localhost:3000/"})
+@CrossOrigin(origins = {
+        "https://id25-react.onrender.com",
+        "https://id25-komregvalg.onrender.com",
+        "http://localhost:3000/",
+        "http://www.intactdenmarktesten.dk",
+        "https://www.intactdenmarktesten.dk",
+        "http://intactdenmarktesten.dk",})
 @RequestMapping("/api/survey")
 public class SurveyController {
 
