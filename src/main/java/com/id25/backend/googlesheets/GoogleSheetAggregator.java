@@ -98,6 +98,17 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
             if (result.get(1) != null) {
 
                 if ((year == 9999L || year == 8888L) && result.get(0).toString().equals(email)) //for tally har jeg skåret de tomme kolonner væk
+                {
+                    if (result.size() < 5) {
+                        return new String[]{
+                                (String) result.get(1),
+                                (String) result.get(2),
+                                (String) result.get(3),
+                                "",
+                                "",
+                        };
+                    }
+
                     return new String[]{
                             (String) result.get(1),
                             (String) result.get(2),
@@ -105,7 +116,7 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
                             (String) result.get(4),
                             "",
                     };
-
+                }
                 if (year == 2025L && result.get(1).toString().equals(email))
                     return new String[]{
                             (String) result.get(4),
