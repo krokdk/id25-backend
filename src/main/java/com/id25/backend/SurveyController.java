@@ -26,7 +26,7 @@ public class SurveyController {
     private DataImporter dataImporter;
     private Map<Long, List<SurveyDto>> cachedData; // Lokalt cachet data
     private Instant lastUpdated;
-    private static final Duration CACHE_DURATION = Duration.ofHours(1); // Cache i 1 time
+    private static final Duration CACHE_DURATION = Duration.ofMinutes(2);
 
     @Autowired
     public SurveyController(GoogleSheetImporterFactory dataImporterFactory) {
