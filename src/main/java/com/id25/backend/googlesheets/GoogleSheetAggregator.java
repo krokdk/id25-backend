@@ -76,6 +76,7 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
             dto.setSvar3(surveyAnswers[2]);
             dto.setSvar4(surveyAnswers[3]);
             dto.setSvar5(surveyAnswers[4]);
+            dto.setEmail(email);
 
             surveys.add(dto);
         }

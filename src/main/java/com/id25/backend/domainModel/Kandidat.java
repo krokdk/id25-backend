@@ -5,5 +5,6 @@ import java.util.*;
 public class Kandidat {
     public String Name;
     public String Email;
+    public String Url;
     public Map<Integer, SurveyResult> SurveyResults;
 }

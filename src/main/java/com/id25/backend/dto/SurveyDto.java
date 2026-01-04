@@ -6,6 +6,7 @@ public class SurveyDto {
     private String storkreds;
     private String valg;
     private String url;
+    private String email;
     private String svar1;
     private String svar2;
     private String svar3;
@@ -15,7 +16,7 @@ public class SurveyDto {
     public SurveyDto(){}
 
     // Constructor with all fields
-    public SurveyDto(String parti, String fornavn, String storkreds, String valg, String svar1, String svar2, String svar3, String svar4, String svar5) {
+    public SurveyDto(String parti, String fornavn, String storkreds, String valg, String svar1, String svar2, String svar3, String svar4, String svar5, String url, String email) {
         this.parti = parti;
         this.fornavn = fornavn;
         this.storkreds = storkreds;
@@ -25,6 +26,8 @@ public class SurveyDto {
         this.svar3 = svar3;
         this.svar4 = svar4;
         this.svar5 = svar5;
+        this.url = url;
+        this.email = email;
     }
 
     // Getters and Setters
@@ -70,6 +73,14 @@ public class SurveyDto {
 
     public String getSvar1() {
         return svar1;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setSvar1(String svar1) {

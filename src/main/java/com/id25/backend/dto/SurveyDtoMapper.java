@@ -8,7 +8,7 @@ public class SurveyDtoMapper {
 
     public static SurveyDto mapToDto(Kandidat kandidat, Integer year){
 
-        var surveyResult =kandidat.SurveyResults.get(year);
+        SurveyResult surveyResult =kandidat.SurveyResults.get(year);
 
         return new SurveyDto(
                 surveyResult.surveyData.Parti,
@@ -19,8 +19,9 @@ public class SurveyDtoMapper {
                 surveyResult.results.get(1),
                 surveyResult.results.get(2),
                 surveyResult.results.get(3),
-                surveyResult.results.get(4)
-        );
+                surveyResult.results.get(4),
+                kandidat.Url,
+                kandidat.Email);
     }
 
 }

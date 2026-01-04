@@ -60,20 +60,23 @@ public class GoogleSheetImporter implements DataImporter {
                     String svar4 = row.size() > 6 ? row.get(6).toString() : "";
                     String svar5 = row.size() > 7 ? row.get(7).toString() : "";
 
+                    String email = row.size() > 9 ? row.get(9).toString() : "";
+
+
                     // Create Survey object with all fields
                     if (year == 2019L){
                         if (svar1 == "")
                             continue;
 
-                        surveys.add(new SurveyDto(parti, fornavn, storkreds, valg, "", svar1, "", "", ""));
+                        surveys.add(new SurveyDto(parti, fornavn, storkreds, valg, "", svar1, "", "", "", "", email));
                     } else if (year == 2021L) {
                         if (svar1 == "")
                             continue;
 
-                        surveys.add(new SurveyDto(parti, fornavn, "", valg, "", svar1, "", "", ""));
+                        surveys.add(new SurveyDto(parti, fornavn, "", valg, "", svar1, "", "", "", "", email));
 
                     } else {
-                        surveys.add(new SurveyDto(parti, fornavn, storkreds, "",replaceEmptyString(svar1), replaceEmptyString(svar2), replaceEmptyString(svar3), replaceEmptyString(svar4), svar5));
+                        surveys.add(new SurveyDto(parti, fornavn, storkreds, "",replaceEmptyString(svar1), replaceEmptyString(svar2), replaceEmptyString(svar3), replaceEmptyString(svar4), svar5, "", email));
                     }
                 }
             }
