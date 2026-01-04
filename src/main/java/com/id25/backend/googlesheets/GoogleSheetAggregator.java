@@ -118,13 +118,14 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
                             "",
                     };
                 }
-                if (year == 2025L && result.get(1).toString().equals(email))
+                if (year == 2026L && result.get(1).toString().equals(email))
                     return new String[]{
                             (String) result.get(4),
                             (String) result.get(5),
                             (String) result.get(6),
                             (String) result.get(7),
                             (String) result.get(8),
+                            // ID132: Update to match number of questions
                     };
             }
         }

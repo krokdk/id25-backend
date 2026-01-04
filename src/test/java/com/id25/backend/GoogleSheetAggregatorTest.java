@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GoogleSheetAggregatorTest {
 
-    String sheetId2025 = GoogleSheetImporterFactory.folketingsvalg2025;
+    String sheetId2026 = GoogleSheetImporterFactory.folketingsvalg2026;
     String sheetId9999 = GoogleSheetImporterFactory.kommunalvalg2025;
     String sheetId8888 = GoogleSheetImporterFactory.regionsrådsvalg2025;
 
     @Test
     public void hulIgennem() {
-        GoogleSheetAggregator importer = new GoogleSheetAggregator(sheetId2025, 2025L);
+        GoogleSheetAggregator importer = new GoogleSheetAggregator(sheetId2026, 2026L);
         try {
             List<SurveyDto> surveys = importer.importData();
 
@@ -33,7 +33,7 @@ public class GoogleSheetAggregatorTest {
 
     @Test
     public void contactMedSurveySvar() {
-        GoogleSheetAggregator importer = new GoogleSheetAggregator(sheetId2025,2025L);
+        GoogleSheetAggregator importer = new GoogleSheetAggregator(sheetId2026,2026L);
         try {
             List<SurveyDto> surveys = importer.importData();
 
@@ -59,7 +59,7 @@ public class GoogleSheetAggregatorTest {
 
     @Test
     public void contactUdenSurveySvar() {
-        GoogleSheetAggregator importer = new GoogleSheetAggregator(sheetId2025, 2025L);
+        GoogleSheetAggregator importer = new GoogleSheetAggregator(sheetId2026, 2026L);
         try {
             List<SurveyDto> surveys = importer.importData();
 
