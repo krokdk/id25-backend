@@ -1,5 +1,5 @@
 # Stage 1: Build the application using OpenJDK 17
-FROM openjdk:17-jdk-slim AS build
+FROM eclipse-temurin:17-jdk-jammy AS build
 WORKDIR /app
 
 # Copy necessary files for building
@@ -15,7 +15,7 @@ RUN chmod +x ./mvnw
 RUN apt-get update && apt-get install -y maven && mvn clean package -DskipTests
 
 # Stage 2: Create the final runtime image
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-jammy
 VOLUME /tmp
 
 # Copy the built JAR from the previous stage
