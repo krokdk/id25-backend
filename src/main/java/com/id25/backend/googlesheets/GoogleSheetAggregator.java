@@ -84,7 +84,7 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
         return surveys;
     }
 
-    private String getUrl(List<Object> contact) {
+    protected String getUrl(List<Object> contact) {
 
         if (contact.size() > 5)
             return (String) contact.get(5);
@@ -92,7 +92,7 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
         return "";
     }
 
-    private String[] getSurveyAnswers(String email, List<List<Object>> responseSurveyResults) {
+    protected String[] getSurveyAnswers(String email, List<List<Object>> responseSurveyResults) {
 
         for (List<Object> result : responseSurveyResults) {
 

@@ -17,6 +17,21 @@ public class GoogleSheetAggregatorTest {
     String sheetId8888 = GoogleSheetImporterFactory.regionsrådsvalg2025;
 
     @Test
+    public void hulIgennem2026() {
+        GoogleSheetAggregator importer = new GoogleSheetAggregator2026(sheetId2026);
+        try {
+            List<SurveyDto> surveys = importer.importData();
+
+            // 🔹 Sikrer at vi har fået data tilbage
+            assertNotNull(surveys, "Liste må ikke være null");
+            assertFalse(surveys.isEmpty(), "Liste må ikke være tom");
+
+        } catch (IOException | GeneralSecurityException e) {
+            fail("Fejl ved import af Google Sheet-data: " + e.getMessage());
+        }
+    }
+
+    @Test
     public void hulIgennem() {
         GoogleSheetAggregator importer = new GoogleSheetAggregator(sheetId2026, 2026L);
         try {

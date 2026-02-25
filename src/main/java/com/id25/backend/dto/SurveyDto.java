@@ -1,5 +1,7 @@
 package com.id25.backend.dto;
 
+import java.util.List;
+
 public class SurveyDto {
     private String parti;
     private String fornavn;
@@ -12,11 +14,13 @@ public class SurveyDto {
     private String svar3;
     private String svar4;
     private String svar5;
+    private String comment;
+    private List<AnswerDto> answers;
 
     public SurveyDto(){}
 
     // Constructor with all fields
-    public SurveyDto(String parti, String fornavn, String storkreds, String valg, String svar1, String svar2, String svar3, String svar4, String svar5, String url, String email) {
+    public SurveyDto(String parti, String fornavn, String storkreds, String valg, String svar1, String svar2, String svar3, String svar4, String svar5, String url, String email, String comment) {
         this.parti = parti;
         this.fornavn = fornavn;
         this.storkreds = storkreds;
@@ -29,6 +33,7 @@ public class SurveyDto {
         // ID132 update to match 2026 questions
         this.url = url;
         this.email = email;
+        this.comment = comment;
     }
 
     // Getters and Setters
@@ -118,6 +123,22 @@ public class SurveyDto {
 
     public void setSvar5(String svar5) {
         this.svar5 = svar5;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public List<AnswerDto> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<AnswerDto> answers) {
+        this.answers = answers;
     }
 
     // Updated toString() method

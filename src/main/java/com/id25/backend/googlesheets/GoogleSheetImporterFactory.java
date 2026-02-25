@@ -13,8 +13,8 @@ public class GoogleSheetImporterFactory {
     public DataImporter getImporter(Long year) {
         Long lookupYear = year == null ? 2024L : year;
 
-        if (lookupYear == 2025L || lookupYear == 2026L)
-            return new GoogleSheetAggregator(folketingsvalg2026, 2026L);
+        if (lookupYear == 2026L)
+            return new GoogleSheetAggregator2026(folketingsvalg2026);
 
         if (lookupYear == 9999L)
             return new GoogleSheetAggregator(kommunalvalg2025, 9999L);

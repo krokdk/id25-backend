@@ -21,7 +21,9 @@ public class SurveyDtoMapper {
                 surveyResult.results.get(3),
                 surveyResult.results.get(4),
                 kandidat.Url,
-                kandidat.Email);
+                kandidat.Email,
+                surveyResult.results.get(4) // comment?
+                );
     }
 
 }
