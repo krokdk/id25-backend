@@ -101,7 +101,7 @@ public class GoogleSheetAggregator2026 extends GoogleSheetAggregator {
         List<AnswerDto> answers = new ArrayList<>();
 
             if (result.get(0) != null) {
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < 20; i++) {
                         answers.add(new AnswerDto("Spm"+(i), (String) result.get(2*i+3), (String) result.get(2*i+4)));
                     }
                 }
