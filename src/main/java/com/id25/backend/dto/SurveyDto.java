@@ -5,6 +5,7 @@ import java.util.List;
 public class SurveyDto {
     private String parti;
     private String fornavn;
+    private String kreds;
     private String storkreds;
     private String valg;
     private String url;
@@ -20,10 +21,11 @@ public class SurveyDto {
     public SurveyDto(){}
 
     // Constructor with all fields
-    public SurveyDto(String parti, String fornavn, String storkreds, String valg, String svar1, String svar2, String svar3, String svar4, String svar5, String url, String email, String comment) {
+    public SurveyDto(String parti, String fornavn, String storkreds, String valg, String svar1, String svar2, String svar3, String svar4, String svar5, String url, String email, String comment, String kreds) {
         this.parti = parti;
         this.fornavn = fornavn;
         this.storkreds = storkreds;
+        this.kreds = kreds;
         this.valg = valg;
         this.svar1 = svar1;
         this.svar2 = svar2;
@@ -59,6 +61,14 @@ public class SurveyDto {
 
     public void setStorkreds(String storkreds) {
         this.storkreds = storkreds;
+    }
+
+    public String getKreds() {
+        return kreds;
+    }
+
+    public void setKreds(String kreds) {
+        this.kreds = kreds;
     }
 
     public String getValg() {

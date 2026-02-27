@@ -68,15 +68,15 @@ public class GoogleSheetImporter implements DataImporter {
                         if (svar1 == "")
                             continue;
 
-                        surveys.add(new SurveyDto(parti, fornavn, storkreds, valg, "", svar1, "", "", "", "", email, ""));
+                        surveys.add(new SurveyDto(parti, fornavn, storkreds, valg, "", svar1, "", "", "", "", email, "", ""));
                     } else if (year == 2021L) {
                         if (svar1 == "")
                             continue;
 
-                        surveys.add(new SurveyDto(parti, fornavn, "", valg, "", svar1, "", "", "", "", email, ""));
+                        surveys.add(new SurveyDto(parti, fornavn, "", valg, "", svar1, "", "", "", "", email, "", ""));
 
                     } else {
-                        surveys.add(new SurveyDto(parti, fornavn, storkreds, "",replaceEmptyString(svar1), replaceEmptyString(svar2), replaceEmptyString(svar3), replaceEmptyString(svar4), svar5, "", email, ""));
+                        surveys.add(new SurveyDto(parti, fornavn, storkreds, "",replaceEmptyString(svar1), replaceEmptyString(svar2), replaceEmptyString(svar3), replaceEmptyString(svar4), svar5, "", email, "",""));
                     }
                 }
             }

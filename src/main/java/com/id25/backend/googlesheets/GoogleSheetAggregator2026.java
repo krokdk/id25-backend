@@ -17,7 +17,7 @@ public class GoogleSheetAggregator2026 extends GoogleSheetAggregator {
 
 
     private SheetInfo getSheetInfoForParty() {
-        return new SheetInfo(sheetId, "kandidater" + "!A:G");
+        return new SheetInfo(sheetId, "kandidater" + "!A:K");
     }
 
     public GoogleSheetAggregator2026(String sheetId) {
@@ -55,18 +55,22 @@ public class GoogleSheetAggregator2026 extends GoogleSheetAggregator {
         for (var contact : kandidater) {
 
             //0: UID	1: Parti	2: Storkreds	3: Kreds	4: Navn	5: email	6: hjemmeside
+//0: TrackingID	1: Navn	2: Parti	3: Kreds	4: Mail 	5: Telefon	6:Fornavn	7: Mellemnavn 8: Efternavn	9:BilledeURL	10:Hjemmeside
+
             if (contact.size() < 6)
                 continue;
 
             String uid = contact.get(0).toString();
-            String email = contact.get(5).toString();
+            String email = contact.get(4).toString();
 
             SurveyDto dto = new SurveyDto();
-            dto.setFornavn(NameFormatter.formatName(contact.get(4).toString()));
-            dto.setParti(PartiMapper.getPartiBogstav(contact.get(1).toString()));
+            dto.setFornavn(NameFormatter.formatName(contact.get(1).toString()));
+            dto.setParti(PartiMapper.getPartiBogstav(contact.get(2).toString()));
             dto.setValg("Folketingsvalg 2026");
-            dto.setStorkreds(contact.get(2).toString());
-            dto.setUrl(contact.get(6).toString());
+            dto.setStorkreds(contact.get(3).toString());
+            if (contact.size() > 10) {
+                dto.setUrl(contact.get(10).toString());
+            }
             dto.setEmail(email);
 
             var answers = getSurveyAnswersRaw(responseSurveyResults, uid);
