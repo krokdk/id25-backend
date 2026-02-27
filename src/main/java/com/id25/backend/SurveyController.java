@@ -18,7 +18,8 @@ import java.util.stream.*;
         "http://localhost:3000/",
         "http://www.intactdenmarktesten.dk",
         "https://www.intactdenmarktesten.dk",
-        "http://intactdenmarktesten.dk",})
+        "http://intactdenmarktesten.dk",
+        "https://id25-kandidattest2026-react.onrender.com",})
 @RequestMapping("/api/survey")
 public class SurveyController {
 
