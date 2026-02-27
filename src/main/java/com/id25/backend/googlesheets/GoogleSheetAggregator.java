@@ -15,6 +15,8 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
 
     String sheetId;
 
+    protected String ikkeBesvaret = "Ikke besvaret";
+
 
     private SheetInfo getSheetInfoForParty(String parti) {
         return new SheetInfo(sheetId, parti + "!A:F");
@@ -130,7 +132,7 @@ public class GoogleSheetAggregator extends GoogleSheetImporter {
             }
         }
 
-        String ikkeBesvaret = "Ikke besvaret";
+
 
         return new String[]{ikkeBesvaret, ikkeBesvaret, ikkeBesvaret, ikkeBesvaret, ikkeBesvaret};
     }

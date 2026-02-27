@@ -32,19 +32,18 @@ public class GoogleSheetAggregator2026 extends GoogleSheetAggregator {
         List<List<Object>> kandidater = new ArrayList<>();
 
 
-            var partiSheetInfo = getSheetInfoForParty();
+        var partiSheetInfo = getSheetInfoForParty();
 
-            try {
-                List<List<Object>> kandidaterForParti = sheetsService.spreadsheets().values()
-                        .get(partiSheetInfo.getSheetId(), partiSheetInfo.getRange())
-                        .execute()
-                        .getValues();
+        try {
+            List<List<Object>> kandidaterForParti = sheetsService.spreadsheets().values()
+                    .get(partiSheetInfo.getSheetId(), partiSheetInfo.getRange())
+                    .execute()
+                    .getValues();
 
-                kandidater.addAll(kandidaterForParti.subList(1, kandidaterForParti.size()));
-            }
-            catch (Exception e) {
-                System.out.println("Failed loading google sheet with id " + sheetId + " : " + e.getMessage());
-            }
+            kandidater.addAll(kandidaterForParti.subList(1, kandidaterForParti.size()));
+        } catch (Exception e) {
+            System.out.println("Failed loading google sheet with id " + sheetId + " : " + e.getMessage());
+        }
 
         SheetInfo surverResultSheetInfo = GoogleSheetsMapper.getSheetInfo(year);
 
@@ -53,7 +52,7 @@ public class GoogleSheetAggregator2026 extends GoogleSheetAggregator {
                 .execute();
 
         List<SurveyDto> surveys = new ArrayList<>();
-        for (var contact : kandidater){
+        for (var contact : kandidater) {
 
             //0: UID	1: Parti	2: Storkreds	3: Kreds	4: Navn	5: email	6: hjemmeside
             if (contact.size() < 6)
@@ -81,11 +80,15 @@ public class GoogleSheetAggregator2026 extends GoogleSheetAggregator {
         return surveys;
     }
 
-    private String getComment(List<Object> answers){
-        return answers.get(4).toString();
+    private String getComment(List<Object> answers) {
+
+        if (!answers.isEmpty() && answers.stream().count() > 3) {
+            return answers.get(4).toString();
+        }
+        return "";
     }
 
-    private List<Object> getSurveyAnswersRaw(ValueRange responseSurveyResults, String uid){
+    private List<Object> getSurveyAnswersRaw(ValueRange responseSurveyResults, String uid) {
         for (List<Object> result : responseSurveyResults.getValues()) {
 
             if (result.get(0) != null) {
@@ -97,16 +100,16 @@ public class GoogleSheetAggregator2026 extends GoogleSheetAggregator {
         return new ArrayList<>();
     }
 
-    private List<AnswerDto> getSurveyAnswers(List<Object> result){
+    private List<AnswerDto> getSurveyAnswers(List<Object> result) {
         List<AnswerDto> answers = new ArrayList<>();
 
-            if (result.get(0) != null) {
-                    for (int i = 0; i < 20; i++) {
-                        answers.add(new AnswerDto("Spm"+(i), (String) result.get(2*i+3), (String) result.get(2*i+4)));
-                    }
-                }
-
-
+        for (int i = 0; i < 20; i++) {
+            if (!result.isEmpty() && result.get(0) != null) {
+                answers.add(new AnswerDto("Spm" + (i), (String) result.get(2 * i + 5), (String) result.get(2 * i + 6)));
+            } else {
+                answers.add(new AnswerDto("Spm" + (i), ikkeBesvaret, ""));
+            }
+        }
         return answers;
     }
 }
