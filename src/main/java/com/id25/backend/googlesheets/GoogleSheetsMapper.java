@@ -7,7 +7,7 @@ class GoogleSheetsMapper {
     private static final Map<Long, SheetInfo> sheetMap = new HashMap<>();
 
     static {
-        sheetMap.put(2026L, new SheetInfo("15blLh4JsUn307gYJKMp5Hojr6mIlk5nn42z50CR2Pi0", "svar!A:AS"));
+        sheetMap.put(2026L, new SheetInfo("15blLh4JsUn307gYJKMp5Hojr6mIlk5nn42z50CR2Pi0", "svar!A:AG"));
         sheetMap.put(9999L, new SheetInfo("1AAeZoCS3K1sFiJqaeuYDktUL-xf2omBXIxs-_ZzfcRg", "kommunalvalg2025!A:F"));
         sheetMap.put(8888L, new SheetInfo("1AAeZoCS3K1sFiJqaeuYDktUL-xf2omBXIxs-_ZzfcRg", "regionsrådsvalg2025!A:F"));
         sheetMap.put(2024L, new SheetInfo("1N6z_A3eAImleBXdzky1cbLADQtUOg2fFNlR9pOiTGDs", "valg2024!A:J"));
