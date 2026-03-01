@@ -73,7 +73,7 @@ public class GoogleSheetAggregator2026 extends GoogleSheetAggregator {
             }
             dto.setEmail(email);
 
-            var answers = getSurveyAnswersRaw(responseSurveyResults, uid);
+            var answers = getSurveyAnswersForGivenUID(responseSurveyResults, uid);
 
             dto.setAnswers(getSurveyAnswers(answers));
 
@@ -92,12 +92,13 @@ public class GoogleSheetAggregator2026 extends GoogleSheetAggregator {
         return "";
     }
 
-    private List<Object> getSurveyAnswersRaw(ValueRange responseSurveyResults, String uid) {
+    private List<Object> getSurveyAnswersForGivenUID(ValueRange responseSurveyResults, String uid) {
         for (List<Object> result : responseSurveyResults.getValues()) {
 
             if (result.get(0) != null) {
                 if (result.get(0).toString().equals(uid)) {
                     return result;
+
                 }
             }
         }
@@ -106,18 +107,26 @@ public class GoogleSheetAggregator2026 extends GoogleSheetAggregator {
 
     private List<AnswerDto> getSurveyAnswers(List<Object> result) {
         List<AnswerDto> answers = new ArrayList<>();
+        List<AnswerDto> notAnswers = new ArrayList<>();
 
-        for (int i = 3; i < 17; i++) {
-            if (!result.isEmpty() && result.get(0) != null) {
-
-                // håndter at komment til sidst kan være tom
-                var answer = (String) result.get(2 * i-1);
-                var comment = result.size()< i ? (String) result.get(2 * i) : "";
-                answers.add(new AnswerDto("Spm" + (i-2), answer, comment));
-            } else {
-                answers.add(new AnswerDto("Spm" + (i), ikkeBesvaret, ""));
-            }
+        for (int i = 0; i < 14; i++) {
+            notAnswers.add(new AnswerDto("Spm" + (i), ikkeBesvaret, ""));
         }
+
+        try {
+            if (!result.isEmpty() && result.get(0) != null && result.get(0) != "") {
+                for (int i = 3; i < 17; i++) {
+                    if (!result.isEmpty() && result.get(0) != null && result.get(0) != "") {
+                        var answer = (String) result.get(2 * i - 1);
+                        var comment = result.size() < i ? (String) result.get(2 * i) : "";
+                        answers.add(new AnswerDto("Spm" + (i - 2), answer, comment));
+                    }
+                }
+            }
+            return answers;
+        } catch (Exception ignored) {
+        }
+
         return answers;
     }
 }
