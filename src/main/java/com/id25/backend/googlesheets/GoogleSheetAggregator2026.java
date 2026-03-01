@@ -107,9 +107,13 @@ public class GoogleSheetAggregator2026 extends GoogleSheetAggregator {
     private List<AnswerDto> getSurveyAnswers(List<Object> result) {
         List<AnswerDto> answers = new ArrayList<>();
 
-        for (int i = 0; i < 13; i++) {
+        for (int i = 3; i < 17; i++) {
             if (!result.isEmpty() && result.get(0) != null) {
-                answers.add(new AnswerDto("Spm" + (i), (String) result.get(2 * i + 5), (String) result.get(2 * i + 6)));
+
+                // håndter at komment til sidst kan være tom
+                var answer = (String) result.get(2 * i-1);
+                var comment = result.size()< i ? (String) result.get(2 * i) : "";
+                answers.add(new AnswerDto("Spm" + (i-2), answer, comment));
             } else {
                 answers.add(new AnswerDto("Spm" + (i), ikkeBesvaret, ""));
             }
