@@ -123,10 +123,12 @@ public class GoogleSheetAggregator2026 extends GoogleSheetAggregator {
                     }
                 }
             }
+            if (answers.isEmpty()){
+                return notAnswers;
+            }
             return answers;
         } catch (Exception ignored) {
+            return notAnswers;
         }
-
-        return answers;
     }
 }
