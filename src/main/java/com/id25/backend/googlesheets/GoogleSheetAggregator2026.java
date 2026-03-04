@@ -115,10 +115,11 @@ public class GoogleSheetAggregator2026 extends GoogleSheetAggregator {
 
         try {
             if (!result.isEmpty() && result.get(0) != null && result.get(0) != "") {
-                for (int i = 3; i < 17; i++) {
+                for (int i = 3; i < 16; i++) {
                     if (!result.isEmpty() && result.get(0) != null && result.get(0) != "") {
-                        var answer = (String) result.get(2 * i - 1);
-                        var comment = result.size() < i ? (String) result.get(2 * i) : "";
+
+                        var answer = result.size() >= 2 * i ? (String) result.get(2 * i - 1) : ikkeBesvaret;
+                        var comment = result.size() > 2 * i ? (String) result.get(2 * i) : "";
                         answers.add(new AnswerDto("Spm" + (i - 2), answer, comment));
                     }
                 }
