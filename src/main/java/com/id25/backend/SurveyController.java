@@ -71,7 +71,7 @@ public class SurveyController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/refresh")
+    @PostMapping("/refresh")
     public String refreshCache() throws GeneralSecurityException, IOException {
 
         cachedData.replaceAll((key, value) -> {
