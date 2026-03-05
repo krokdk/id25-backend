@@ -70,19 +70,4 @@ public class SurveyController {
                 .filter(s -> email == null || s.getEmail().equalsIgnoreCase(email))
                 .collect(Collectors.toList());
     }
-
-    @PostMapping("/refresh")
-    public String refreshCache() throws GeneralSecurityException, IOException {
-
-        cachedData.replaceAll((key, value) -> {
-            try {
-                return googleSheetImporterFactory.getImporter(key).importData();
-            } catch (GeneralSecurityException | IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        lastUpdated = Instant.now();
-        return "Cache opdateret!";
-    }
 }
