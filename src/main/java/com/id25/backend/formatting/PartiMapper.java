@@ -22,7 +22,7 @@ public class PartiMapper {
         bogstavTilNavne.put("Ø", Arrays.asList("Ø", "Enhedslisten", "EL"));
         bogstavTilNavne.put("Å", Arrays.asList("Å", "Alternativet", "ALT"));
         bogstavTilNavne.put("NA", Arrays.asList("Nordatlantiske mandater", "JF", "SIU", "SP", "IA"));
-        bogstavTilNavne.put("LØ", Arrays.asList("UFG", "Uden for folketingsgrupperne"));
+        bogstavTilNavne.put("?", Arrays.asList("UFG", "Uden for folketingsgrupperne", "?", "Løsgænger"));
 
 
         // Opret lookup-mappe automatisk
