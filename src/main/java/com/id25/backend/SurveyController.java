@@ -15,6 +15,7 @@ import java.util.stream.*;
 @RestController
 @CrossOrigin(origins = {
         "https://id25-react.onrender.com",
+        "https://id25-usertests.onrender.com",
         "https://id25-komregvalg.onrender.com",
         "http://localhost:3000/",
         "http://www.intactdenmarktesten.dk",
