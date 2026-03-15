@@ -2,6 +2,7 @@ package com.id25.backend;
 
 import com.id25.backend.dto.*;
 import com.id25.backend.googlesheets.*;
+import com.id25.backend.matcher.candidateMatcher;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +47,6 @@ public class SurveyController {
             @RequestParam(required = false) String svar3,
             @RequestParam(required = false) String svar4,
             @RequestParam(required = false) String svar5,
-            // ID132 update to match 2026 questions
             @RequestParam(required = false) String url,
             @RequestParam(required = false) Long year,
             @RequestParam(required = false) String email
@@ -69,5 +69,22 @@ public class SurveyController {
                 .filter(s -> url == null || s.getUrl().equalsIgnoreCase(url))
                 .filter(s -> email == null || s.getEmail().equalsIgnoreCase(email))
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping("/results/matches")
+    public List<MatchResponseDto> getMatches(
+            @RequestBody MatchDto match
+    ) throws GeneralSecurityException, IOException {
+        if (cachedData.isEmpty() || !cachedData.containsKey(2026L) || Duration.between(lastUpdated, Instant.now()).compareTo(CACHE_DURATION) > 0) {
+            dataImporter = googleSheetImporterFactory.getImporter(2026L);
+            cachedData.put(2026L, dataImporter.importData()); // Henter friske data
+            lastUpdated = Instant.now();
+        }
+        var candidates = cachedData.get(2026L).stream()
+                .filter(s -> match.getStorkreds() == null || s.getStorkreds().equalsIgnoreCase(match.getStorkreds()))
+                .collect(Collectors.toList());
+
+        return new candidateMatcher().getMatches(Arrays.asList(match.getAnswers()), candidates);
+
     }
 }
