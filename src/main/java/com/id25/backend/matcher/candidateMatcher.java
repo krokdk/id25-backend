@@ -22,8 +22,8 @@ public class candidateMatcher {
 
             if (uA.equals(cA)){
                 sum += 1;
-            } else if (uA.equals(vedIkke) || cA.equals(vedIkke) ) {
-                sum += 0.5; //skal kandidaten straffes for at svare ved ikke?
+            } else if (uA.equals(vedIkke)) {
+                sum += 0.5;
             }
         }
 
